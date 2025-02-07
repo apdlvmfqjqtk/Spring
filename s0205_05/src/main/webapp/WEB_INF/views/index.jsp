@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,13 +8,17 @@
 	<title>메인페이지</title>
 	</head>
 	<body>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
-		<h1>메인페이지</h1>
+		<h2>메인 페이지</h2>
+		<h4>세션 : ${session_id}</h4>
+		<c:if test="${session_id == null }">
+			<div><a href="/login">로그인</a></div>
+			<div><a href="/member">회원가입</a></div>
+		</c:if>
+		<c:if test="${session_id != null }">
+			<div><a href="/logout">로그아웃</a></div>
+			<div><a href="/board">게시판</a></div>
+			<div><a href="/logininfo">로그인정보</a></div>
+			<div><a href="/meminfo">회원정보</a></div>
+		</c:if>
 	</body>
 </html>
