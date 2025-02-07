@@ -28,6 +28,13 @@ public class BoardController {
 		return "board/blist";
 	}
 	
+	@GetMapping("/bview")
+	public String bview() {
+		System.out.println("bno");
+//		BoardDto boardDto = BoardService.bview(bno);
+		
+		return "board/bview";
+	}
 	
 	
 }
