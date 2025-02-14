@@ -6,7 +6,6 @@
 <html>
 <head>
 <title> JARDIN SHOP </title>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="description" content="JARDIN SHOP" />
@@ -24,70 +23,13 @@
 <script type="text/javascript" src="../js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.anchor.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="../js/html5.js"></script>
 <script type="text/javascript" src="../js/respond.min.js"></script>
 <![endif]-->
-<script type="text/javascript">
-$(document).ready(function() {
-	
-
-
-});
-</script>
 </head>
 <body>
-
-
-
-<!--익스레이어팝업-->
-<div id="ieUser" style="display:none">
-	<div class="iewrap">	
-		<p class="img"><img src="../images/ico/ico_alert.gif" alt="알림" /></p>
-		<p class="txt">IE버전이 낮아 홈페이지 이용에 불편함이 있으므로 <strong>IE9이상이나 다른 브라우저</strong>를 이용해 주세요. </p>
-		<ul>
-			<li><a href="http://windows.microsoft.com/ko-kr/internet-explorer/download-ie" target="_blank"><img src="../images/ico/ico_ie.gif" alt="IE 최신브라우저 다운" ></a></li>
-			<li><a href="https://www.google.com/intl/ko/chrome/browser" target="_blank"><img src="../images/ico/ico_chrome.gif" alt="IE 최신브라우저 다운" ></a></li>
-			<li><a href="http://www.mozilla.org/ko/firefox/new" target="_blank"><img src="../images/ico/ico_mozila.gif" alt="MOZILA 최신브라우저 다운" ></a></li>
-			<li><a href="http://www.apple.com/safari" target="_blank"><img src="../images/ico/ico_safari.gif" alt="SAFARI 최신브라우저 다운" ></a></li>
-			<li><a href="http://www.opera.com/ko/o/ie-simple" target="_blank"><img src="../images/ico/ico_opera.gif" alt="OPERA 최신브라우저 다운" ></a></li>		
-		</ul>
-		<p class="btn" onclick="msiehide();"><img src="../images/ico/ico_close.gif" alt="닫기" /></p>
-	</div>
-</div>
-<!--//익스레이어팝업-->
-<!--IE 6,7,8 사용자에게 브라우저 업데이터 설명 Div 관련 스크립트-->
- <script type="text/javascript">
-
-     var settimediv = 200000; //지속시간(1000= 1초)
-     var msietimer;
-
-     $(document).ready(function () {
-         msiecheck();
-     });
-
-     var msiecheck = function () {
-         var browser = navigator.userAgent.toLowerCase();
-         if (browser.indexOf('msie 6') != -1 ||
-                browser.indexOf('msie 7') != -1 ||
-				 browser.indexOf('msie 8') != -1) {
-             msieshow();			 
-         }
-         else {
-             msiehide();
-         }
-     }
-
-     var msieshow = function () {
-        $("#ieUser").show();
-        msietimer = setTimeout("msiehide()", settimediv);
-     }
-
-     var msiehide = function () {
-		$("#ieUser").hide();
-        clearTimeout(msietimer);
-     }
-</script>
 
 <div id="allwrap">
 <div id="wrap">
@@ -107,7 +49,7 @@ $(document).ready(function() {
 			</div>
 			<div id="snb">
 				<ul>
-					<li><a href="#">LOGIN</a></li>
+					<li><a href="/member/login">LOGIN</a></li>
 					<li><a href="#">JOIN</a></li>
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
@@ -262,7 +204,24 @@ $(document).ready(function() {
 					<!-- //이전다음글 -->
 					
 <script>
-					  $(function(){
+					  // $(function(){
+						$(document).ready(function(){
+							let chk = 0; //화면창 열림체크
+							let cno;
+							let eno = "${edto.eno}";
+							let id = "${session_id}";
+							let cdate;
+							let ccontent;
+							//댓글 쓰기
+						  $(".replyBtn").click(function(){
+							 if($("${session_id}"==""){
+								 alert("로그인을 하셔야 댓글 작성이 가능합니다.");
+								 if(confirm("로그인 페이지로 이동하시겠습니까?")){
+								   location.href="/member/login"
+								 }
+								 
+								 return;
+							 }
 						  $(".replyBtn").click(function(){
 							 if($(".replyType").val().length<1){
 								 alert("댓글 내용을 입력하셔야 저장이 가능합니다.");
@@ -270,7 +229,7 @@ $(document).ready(function() {
 								 return;
 							 }
 							 alert("댓글을 저장합니다.");
-							 console.log("총 개수 : "+(Number($(".allcount").text())+1));
+							 console.log("총 개수 : "+(Number($(".allcount").text())+1)+" 개");
 
 							 let cpw = $(".replynum").val();
 							 let ccontent = $(".replyType").val();
@@ -293,9 +252,9 @@ $(document).ready(function() {
 									
 									let hdata = "";
 									//데이터 html 코드 생성
-									hdata += '<ul id="'+cno+'">';
+									hdata += '<ul id="'+data.cno+'">';
 									hdata += '<li class="name">'+id+'<span> ['+
-										moment(cdate).format("YYYY-MM-DD HH:mm:ss")
+										moment(data.cdate).format("YYYY-MM-DD HH:mm:ss")
 										+']</span></li>';
 									hdata += '<li class="txt">'+ccontent+'</li>';
 									hdata += '<li class="btn">';
@@ -315,12 +274,133 @@ $(document).ready(function() {
 								error:function(){
 									alert("댓글저장 실패");
 								}
-							 });
+							 });//ajax
+						  });//ryplybtn //댓글 등록 버튼
+						  
+						  // 댓글 삭제 - 정적형태: 화면 표시가 되면 추가된 html 소스에는 적용이 안됨
+						  // $(".deleteBtn").click(funtion(){});
+						  
+						  //댓글 삭제 - 동적형태: 추가적인 html 소스에도 적용이 가능
+						 		$(document).on('click', '.deleteBtn', function(){
+									if (chk==1){
+										alert('다른 수정화면이 열려있습니다. 완료, 취소를 한 후 수정이 가능합니다.')
+										return;
+									}
+									chk = 1;
+								console.log($(this).closest("ul").attr("id"));
+								let cno = ($(this).closest("ul").attr("id"));
+								if(confirm("삭제하시겠습니까?")){
+									alert(cno + " 번 댓글이 삭제되었습니다.")
+									
+								$.ajax({
+									url:"/event/cdelete", //링크주소
+									type:"post",         //타입
+									data:{"cno":cno}, //파라미터
+									dataType:"text", //리턴받을 값의 형태
+									success:function(data){
+										console.log(data);
+										//삭제
+										$("#"+cno).remove();
+										//총개수 1증가
+									  let allcount = Number($(".allcount").text())+1;
+									  $(".allcount").text(allcount);
+										},
+										error:function(){
+											alert("댓글삭제 실패");
+										}
+							 	});//ajax
+							 }
+							});//도큐먼트 deleteBtn
+							//업데이트 수정
+							$(document).on('click', '.updateBtn', function(){
+								console.log($(this).closest("ul").attr("id"));
+								cno = $(this).closest("ul").attr("id");
+								cdate = $(this).closest("ul").children(".name").children("span").text();
+								ccontent = ($(this).closest("ul").children(".txt").text());
+								
+								console.log(cno);
+								console.log(cdate);
+								console.log(id);
+								console.log(ccontent);
+								alert(cno + " 번 댓글 클릭");
+								
+								let hdata = `
+								<ul>
+									<li class="name">`+id+`<span> `+cdate+` </span></li>
+									<li class="txt"><textarea class="replyType">`+ccontent+`</textarea></li>
+									<li class="btn">
+										<a class="rebtn saveBtn">완료</a>
+										<a class="rebtn cancelBtn">취소</a>
+									</li>
+								</ul>
+								`
+								$("#"+cno).html(hdata);
+										
+							});//updateBtn
+						  
+							//수정화면 취소
+							$(document).on("click",".cancelBtn",function(){
+						  	alert(cno+	"번 취소버튼 클릭")
+								console.log(cno);
+								console.log(cdate);
+								console.log(id);
+								
+								let hdata = `
+									<li class="name">`+id+`<span> `+cdate+` </span></li>
+									<li class="txt">`+ ccontent +`</li>
+									<li class="btn">
+										<a class="rebtn updateBtn">수정</a>
+										<a class="rebtn deleteBtn">삭제</a>
+									</li>
+									`;
+									
+									$("#"+cno).html(hdata);
+									chk=0;
+							});//cancelBtn
+							//댓글수정 저장
+					  	$(document).on("click",".saveBtn",function(){
+								alert(cno + "번 댓글수정을 하였습니다..")
+								let ccontent = $(this).closest("ul").children(".txt").children(".replyType").val();
+								
+							$.ajax({
+								url:"/event/cupdate", //링크주소
+								type:"post",         //타입
+								data:{"eno":eno,"cno":cno,"ccontent":ccontent}, //파라미터
+								dataType:"json", //리턴받을 값의 형태
+								success:function(data){
+									console.log(data.cno);
+									console.log(data.ccontent);
+									console.log(data.cdate);
+									let cno = data.cno;
+									let ccontent = data.ccontent;
+									let cdate = data.cdate;
+									let id = data.id
+									
+									let hdata = "";
+									//데이터 html 코드 생성
+									hdata += '<ul id="'+data.cno+'">';
+									hdata += '<li class="name">'+id+'<span> ['+
+										moment(data.cdate).format("YYYY-MM-DD HH:mm:ss")
+										+']</span></li>';
+									hdata += '<li class="txt">'+data.ccontent+'</li>';
+									hdata += '<li class="btn">';
+									hdata += '<a class="rebtn updateBtn">수정</a>&nbsp';
+									hdata += '<a class="rebtn deleteBtn">삭제</a>';
+									hdata += '</li>';
+									hdata += '</ui>';
+									
+									$("#"+cno).html(hdata);
+									
+									//입력된 글 삭제
+									$(".replynum").val("");
+									$(".replyType").val("");
+								}
+							});
+								
+								
+							});//saveBtn
 							
-							
-						  });//ryplybtn
 					  });//jquery
-					
 					</script>
 
 					<!-- 댓글-->
@@ -338,14 +418,24 @@ $(document).ready(function() {
 
 					<div class="replyBox">
 					<c:forEach items="${clist}" var="cdto" >
+					<!-- 자기가 쓴 경우 -->
+					<c:if test="${session_id == cdto.id}">
 						<ul id="${cdto.cno}">
 							<li class="name">${cdto.id } <span>[${cdto.cdate}]</span></li>
-							<li class="txt">${cdto.ccontent } </li>
+							<li class="txt">${cdto.ccontent }</li>
 							<li class="btn">
 								<a class="rebtn updateBtn">수정</a>
 								<a class="rebtn deleteBtn">삭제</a>
 							</li>
 						</ul>
+					</c:if>
+					<!-- 자기가 쓴 게 아닌 경우ㅡ -->
+					<c:if test="${session_id == cdto.id}">
+							<li class="txt">
+								<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
+							</li>
+						</ul>
+					</c:if>
 					</c:forEach>
 						
 						<!--  댓글수정, 비밀댓글 창
@@ -360,7 +450,7 @@ $(document).ready(function() {
 						 -->
 
 						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
+							<li class="name">${cdto.id } <span>[${cdto.cdate}]</span></li>
 							<li class="txt">
 								<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
 							</li>
