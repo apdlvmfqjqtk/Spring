@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +22,7 @@
 <script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="../js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.anchor.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="../js/html5.js"></script>
 <script type="text/javascript" src="../js/respond.min.js"></script>
@@ -89,7 +94,9 @@ $(document).ready(function() {
 	<div id="header">
 		
 		<div id="snbBox">
-			<h1><img src="../images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
+			<h1><a href="/">
+			  <img src="../images/txt/logo.gif" alt="JARDIN SHOP" />
+			</a></h1>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="../images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="../images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
@@ -188,75 +195,141 @@ $(document).ready(function() {
 		<div id="location">
 			<ol>
 				<li><a href="#">HOME</a></li>
-				<li><a href="#">MEMBERSHIP</a></li>
-				<li class="last">회원가입</li>
+				<li><a href="#">COMMUNITY</a></li>
+				<li class="last">사용 후기</li>
 			</ol>
 		</div>
 		
 		<div id="outbox">		
 			<div id="left">
-				<div id="title2">MEMBERSHIP<span>멤버쉽</span></div>
+				<div id="title2">COMMUNITY<span>커뮤니티</span></div>
 				<ul>	
-					<li><a href="#" id="leftNavi1">로그인</a></li>
-					<li><a href="#" id="leftNavi2">회원가입</a></li>
-					<li><a href="#" id="leftNavi3">아이디/<span>비밀번호 찾기</span></a></li>
-					<li><a href="#" id="leftNavi4">회원약관</a></li>
-					<li><a href="#" id="leftNavi5">개인정보<span>취급방침</span></a></li>
-					<li class="last"><a href="#" id="leftNavi6">이메일무단<span>수집거부</span></a></li>
+					<li><a href="/community/comment" id="leftNavi1">체험단</a></li>
+					<li><a href="#" id="leftNavi2">사용 후기</a></li>
+					<li class="last"><a href="#" id="leftNavi3">ENJOY COFFEE</a></li>
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(2,0);</script>
 
 
 			<!-- contents -->
 			<div id="contents">
-				<div id="member">
-					<h2><strong>회원가입</strong><span>회원으로 가입하시면 보다 더 다양한 혜택을 누리실 수 있습니다.</span></h2>
+				<div id="mypage">
+					<h2><strong>사용 후기</strong><span>쟈뎅 제품을 구매하신 회원님들의 소중한 후기입니다.</span></h2>
 					
-					<!-- STEP -->
-					<div class="stepWrap">
-						<div class="step stepon">
-							<p class="web">STEP 01</p>
-							<p class="txt">실명확인</p>
-							<p class="ck"><img src="../images/bg/bg_step.png" alt="현재위치" /></p>
-						</div>
-
-						<div class="step">
-							<p class="web">STEP 02</p>
-							<p class="txt">약관 동의</p>
-						</div>
-
-						<div class="step">
-							<p class="web">STEP 03</p>
-							<p class="txt"><span>회원정보</span> <span>입력</span></p>
-						</div>
-
-						<div class="step">
-							<p class="web">STEP 04</p>
-							<p class="txt"><span>회원가입</span> <span>완료</span></p>
-						</div>
-					</div>
-					<!-- //STEP -->
-						
-
-					<div class="alertBox">
+					<div class="productTab normaltab">
 						<ul>
-							<li>회원님의 실명확인 및 가입 여부를 확인하는 절차입니다.</li>
-							<li>회원님의 개인 정보 보호를 위해 실명확인을 실시하고 있습니다.</li>
+							<li><a href="#" class="on">포토 구매후기</a></li>
+							<li class="last"><a href="#">상품평</a></li>
+						</ul>						
+					</div>
+					<script>
+					  $(function(){
+						  
+						  $.ajax({
+							url:"/community/api_data",
+							type:"post",
+							data:{},
+							dataType:"json",
+							success:function(data){
+								//console.log(data);
+								console.log(data.response.body.items.item);
+								let apiArr = data.response.body.items.item;
+								let hdata = ``;
+								//api 4개 데이터를 출력
+								for(let i=0;i<4;i++){
+									hdata += `
+										<li>
+										<div class="img"><img src="`+apiArr[i].galWebImageUrl+`" width="155" height="160" alt="" /></div>
+										<div class="txt">
+											<div class="subject">
+												<a href="/community/epilogue_view?galContentId=`+apiArr[i].galContentId+`"><span class="orange">[제목] </span>`+apiArr[i].galTitle+`</a>
+											</div>
+											<div class="conf">
+												`+apiArr[i].galSearchKeyword +`
+											</div>
+											<div class="data">
+												<p>작성자 <span>`+apiArr[i].galPhotographer+`</span></p>
+												<p>등록일 <span>`+apiArr[i].galCreatedtime+`</span></p>
+												<p>조회수 <span>325</span></p>
+												<p>평점 
+													<span class="ty">
+														<img src="../images/ico/ico_star.gif" alt="별점" />
+														<img src="../images/ico/ico_star.gif" alt="별점" />
+														<img src="../images/ico/ico_star.gif" alt="별점" />
+														<img src="../images/ico/ico_star.gif" alt="별점" />
+														<img src="../images/ico/ico_star.gif" alt="별점" />
+													</span>
+												</p>
+											</div>
+										</div>
+									</li>
+									`;
+								}//for
+								
+								$(".apiType").html(hdata);
+								
+							},
+							error:function(){
+								alert("api호출 실패");
+							}
+						  });//ajax
+					  });//jquery
+					  
+					</script>
+
+					<!-- 포토 구매후기 -->
+					<div class="imgListType">
+						<ul class="apiType">
+							<!-- List -->
+							
+							<!-- //List -->
 						</ul>
 					</div>
 
 
-					<!-- Btn Area -->
-					<div class="btnAreaCenter">
-						<a href="#" class="gbtn">휴대폰인증</a></li>
+					<div class="btnAreaList">
+						<div class="bwright">
+							<ul>
+								<li><a href="#" class="sbtnMini">글쓰기</a></li>
+							</ul>
+						</div>
+
+						<!-- 페이징이동1 -->
+						<div class="allPageMoving1">
+
+						<a href="#" class="n"><img src="../images/btn/btn_pre2.gif" alt="처음으로"/></a><a href="#" class="pre"><img src="../images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
+						<strong>1</strong>
+						<a href="#">2</a>
+						<a href="#">3</a>
+						<a href="#">4</a>
+						<a href="#">5</a>
+						<a href="#" class="next"><img src="../images/btn/btn_next1.gif" alt="뒤페이지로"/></a><a href="#" class="n"><img src="../images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+
+						</div>
+						<!-- //페이징이동1 -->
 					</div>
-					<!-- //Btn Area -->
+
+					<div class="searchWrap">
+						<div class="search">
+							<ul>
+								<li class="web"><img src="../images/txt/txt_search.gif" alt="search" /></li>
+								<li class="se">
+									<select>
+										<option value="" />제목</option>
+									</select>
+								</li>
+								<li><input type="text" class="searchInput" /></li>
+								<li class="web"><a href="#"><img src="../images/btn/btn_search.gif" alt="검색" /></a></li>
+								<li class="mobile"><a href="#"><img src="../images/btn/btn_search_m.gif" alt="검색" /></a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- //포토 구매후기 -->
 
 
 				</div>
 			</div>
 			<!-- //contents -->
-
 
 		</div>
 	</div>
