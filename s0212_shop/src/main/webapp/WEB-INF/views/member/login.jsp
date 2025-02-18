@@ -1,82 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<!DOCTYPE html>
-<html>
-<head>
-<title> JARDIN SHOP </title>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="description" content="JARDIN SHOP" />
-<meta name="keywords" content="JARDIN SHOP" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scaleable=no" />
-<link rel="stylesheet" type="text/css" href="../css/reset.css?v=Y" />
-<link rel="stylesheet" type="text/css" href="../css/layout.css?v=Y" />
-<link rel="stylesheet" type="text/css" href="../css/content.css?v=Y" />
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script> <!-- 제이쿼리최신 -->
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/top_navi.js"></script>
-<script type="text/javascript" src="../js/left_navi.js"></script>
-<script type="text/javascript" src="../js/main.js"></script>
-<script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="../js/idangerous.swiper-2.1.min.js"></script>
-<script type="text/javascript" src="../js/jquery.anchor.js"></script>
-<!--[if lt IE 9]>
-<script type="text/javascript" src="../js/html5.js"></script>
-<script type="text/javascript" src="../js/respond.min.js"></script>
-<![endif]-->
-<script type="text/javascript">
-$(document).ready(function() {
-	$(".sbtn").click(function(){
-		// alert("로그인 버튼 클릭")
-		// alert($("input[name='id']").val());
-		loginFrm.submit();
-	})
-
-});
-//로그인 여부
-if("${param.loginChk}"=="0"){
-	alert("아이디 또는 패스워드가 일치하지 않습니다. 다시 로그인해주세요.")
-}
-</script>
-</head>
-<body>
-
-<div id="allwrap">
-<div id="wrap">
-
-	<div id="header">
-		
-		<div id="snbBox">
-			<h1><img src="../images/txt/logo.gif" alt="JARDIN SHOP" /></h1>
-			<div id="quickmenu">
-				<div id="mnaviOpen"><img src="../images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
-				<div id="mnaviClose"><img src="../images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
-				<ul>
-					<li><a href="#">EVENT</a></li>
-					<li><a href="#">CUSTOMER</a></li>
-					<li><a href="#">COMMUNITY</a></li>
-				</ul>
-			</div>
-			<div id="snb">
-				<ul>
-					<li><a href="#">LOGIN</a></li>
-					<li><a href="#">JOIN</a></li>
-					<li><a href="#">MY PAGE</a></li>
-					<li><a href="#">CART</a></li>
-				</ul>
-
-				<div id="search">
-					<input type="text" class="searchType" />
-					<input type="image" src="../images/btn/btn_main_search.gif" width="23" height="20" alt="검색하기" />
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+<%@ include file="../header.jsp" %>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- GNB -->
 	<div id="gnb">
 		
@@ -167,6 +92,80 @@ if("${param.loginChk}"=="0"){
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(1,0);</script>
 			
+			<script>
+			//쿠키 읽어오기
+			$(function(){
+				console.log("쿠키 읽어오기");
+				console.log(document.cookie);
+				//쿠키 배열 생성
+				const cookies = document.cookie.split("; ");
+				for(let cookie of cookies){
+					let [k,v] = cookie.split("=");
+				 	if(k == "cook_id"){
+						console.log(v);
+						$("#id").val(v);
+						$("#id").focus();
+						$("#idsave").attr("checked",true);
+					}
+				}
+			
+			//체크박스 선택 시 쿠키 저장
+					$("#idsave").change(()=> {
+						if($("#idsave").is(":checked")){
+							alert("체크가 되었습니다");
+							let id = $("#id").val();
+							let date = new Date();
+							date.setTime(date.getTime()+(1000*60*60*24)) // 1일
+							//쿠키저장
+							document.cookie = `cook_id=`+id+`; expires=`+date.toUTCString()+`; path=/`;
+						}else{
+							alert("체크가 해제되었습니다.");
+							//쿠키 삭제 - 시간 0으로 세팅, 지난 시간을 입력하면 사라짐	
+							document.cookie = `cook_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC path=/`;
+							$("#id").val("");
+						}
+          });//change
+				});//jquery
+			</script>
+			
+			<!--  <script>
+			  //자바스크립트에서 쿠키저장
+			  $(function(){
+				 //쿠키 읽기
+				 console.log("전체 쿠키 읽어오기 ")
+				 console.log(document.cookie);
+				 // 쿠키배열생성
+				 const cookies = document.cookie.split("; ");
+				 for(let cookie of cookies){
+					 let [k,v] = cookie.split("=");
+					 if(k == "cook_id"){
+						 console.log(v);
+						 $("#id").val(v);
+						 $("#id").focus();
+						 $("#idsave").attr("checked",true);
+					 }
+				 } 
+				  
+				 //체크박스 체크시 쿠키 저장 
+				 $("#idsave").change(()=>{
+					 if($("#idsave").is(":checked")){
+					     let id = $("#id").val();
+					     let date = new Date();
+					     date.setTime(date.getTime()+(1000*60*60*24)); //1일
+					     //쿠키저장
+					     document.cookie = `cook_id=`+id+`; expires=`+date.toUTCString()+`; path=/`;
+					     console.log(document.cookie);
+					 }else{
+						 //쿠키삭제 - 시간 0으로 세팅, 지난시간을 입력하면 사라짐.
+						 document.cookie = `cook_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+						 $("#id").val("");
+					     console.log(document.cookie);
+					 }
+				 });
+			  });
+			</script> -->
+			
+			
 			<!-- contents -->
 			<div id="contents">
 				<div id="member">
@@ -176,7 +175,7 @@ if("${param.loginChk}"=="0"){
 						<div class="inform">
 							<ul>
 								<form action="/member/login" name="loginFrm" method="post">
-									<li><input type="text" name="id" class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
+									<li><input type="text" name="id" id="id" class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 									<li><input type="password" name="pw" class="passType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 								</form>
 							</ul>
@@ -219,42 +218,4 @@ if("${param.loginChk}"=="0"){
 	<!-- //container -->
 
 
-
-
-	<div id="footerWrap">
-		<div id="footer">
-			<div id="fnb">
-				<ul>
-					<li class="left"><a href="#">개인정보취급방침</a></li>
-					<li><a href="#">이용약관</a></li>
-					<li class="left"><a href="#">이메일무단수집거부</a></li>
-					<li><a href="#">고객센터</a></li>
-					<li class="left brand"><a href="#">쟈뎅 브랜드 사이트</a></li>
-				</ul>
-			</div>
-			
-			<div id="finfo">
-				<div id="flogo"><img src="../images/txt/flogo.gif" alt="JARDIN THE COFFEE CREATOR, SINCE 1984" /></div>
-				<address>
-					<ul>
-						<li>㈜쟈뎅</li>
-						<li>대표자 윤영노</li>
-						<li class="tnone">주소 서울시 강남구 논현동 4-21번지 영 빌딩</li>
-						<li class="webnone">소비자상담실 02)546-3881</li>
-						<li>사업자등록번호 211-81-24727</li>
-						<li class="tnone">통신판매신고 제 강남 – 1160호</li>
-						<li class="copy">COPYRIGHT © 2014 JARDIN <span>ALL RIGHTS RESERVED.</span></li>
-					</ul>
-				</address>
-
-				<div id="inicis"><img src="../images/ico/ico_inicis.png" alt="이니시스 결제시스템" /></div>
-			</div>
-		</div>
-	</div>
-
-
-
-</div>
-</div>
-</body>
-</html>
+<%@ include file="../footer.jsp" %>

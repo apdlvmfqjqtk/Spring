@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.java.dto.MemberDto;
 import com.java.service.MemberService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -19,6 +21,12 @@ public class MemberController {
 
 	@Autowired HttpSession session;
 	@Autowired MemberService memberService;
+	
+	@GetMapping("/step02")//약관동의
+	public String step02() {
+		session.removeAttribute("pwCode");
+		return "/member/step02";
+	}
 	
 	@GetMapping("/step01")//회원가입
 	public String step01() {
@@ -35,6 +43,18 @@ public class MemberController {
 		return pwCode;
 	}
 	
+	@ResponseBody // 인증코드 확인 발송
+	@PostMapping("/pwCodeCheck")
+	public String pwCodeCheck(String pwCode) {
+		System.out.println("pwCode : " + pwCode);
+		String pw = (String)session.getAttribute(pwCode);
+		if(pwCode.equals(pw)) {
+			return "1";
+		}else {
+			return "0";
+		}
+	}
+	
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
@@ -45,6 +65,15 @@ public class MemberController {
 	public String login() {
 		return "/member/login";
 	}
+	
+//	@GetMapping("/login")
+//	public String login(HttpServletResponse response) {
+//		//쿠키 생성
+//		Cookie cookie = new Cookie("cookie_id", "aaa");
+//		cookie.setMaxAge(60*60*24); //(s*m*h)
+//		response.addCookie(cookie); // 쿠키 저장
+//		return "/member/login";
+//	}
 	
 	@PostMapping("/login")
 	public String login(MemberDto mdto, Model model) {
