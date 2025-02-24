@@ -6,7 +6,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원리스트</title>
+		<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 		<style>
+			body{font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;}
 		  h2{text-align: center;}
 		  table,th,td{border:1px solid black; border-collapse: collapse;}
 		  table{text-align: center; width:800px; margin:0 auto;}
