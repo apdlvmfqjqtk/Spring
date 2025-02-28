@@ -9,42 +9,42 @@ import com.java.dto.MemberDto;
 import com.java.repository.MemberRepository;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
 	@Autowired MemberRepository memberRepository;
 	
-	@Override
+	@Override //회원가입
 	public void save(MemberDto mdto) {
-		memberRepository.save(mdto); // 자동으로 저장,  mapper.xml이 필요없어짐
+		memberRepository.save(mdto); //자동으로 저장, mapper.xml
 	}
 
 	@Override
-	public List<MemberDto> FimdAll() {
+	public List<MemberDto> findAll() {
 		List<MemberDto> list = memberRepository.findAll();
 		return list;
 	}
 
 	@Override
-	public MemberDto FindbyId(String id) {
-		//findById -> 검색결과가 없을경우 에러처리해야함
-		//select * from memberdto where id = #{id};
-		//findByIdAndPw는
-		// select * from memberdto where id=#{id} and pw=#{pw}; 와 같다		
-		
+	public MemberDto findById(String id) {
+		//findById -> 검색이 없을 경우 에러처리를 해야 함.
+		// select * from memberdto where id = #{id}
+		// findByIdAndPw
+		// select * from memberdto where id= #{id} and pw=#{pw}
 		MemberDto memberDto = memberRepository.findById(id)
 				.orElseThrow(()->{
-					return new IllegalArgumentException("데이터 에시처리");
+					return new IllegalArgumentException("데이터 처리시 에러!!");
 				});
 		return memberDto;
 	}
 
-	@Override //회원정보삭제
+	@Override
 	public void deleteById(String id) {
 		memberRepository.deleteById(id);
+		
 	}
 
 	@Override //로그인
-	public MemberDto FindbyIdAndPw(String id, String pw) {
+	public MemberDto findByIdAndPw(String id, String pw) {
 		MemberDto memberDto = memberRepository.findByIdAndPw(id,pw);
 		return memberDto;
 	}

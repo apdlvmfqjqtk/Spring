@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 public class ReController {
 	
 	@Autowired EventService eventService;
-	@Autowired HttpSession session;
+	@Autowired HttpSession session;	
 	//댓글 달기
 	@PostMapping("/cwrite")
 	public CboardDto cwrite(CboardDto cdto) {
