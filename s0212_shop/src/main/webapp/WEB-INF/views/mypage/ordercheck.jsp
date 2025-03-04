@@ -1,74 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-
-	<!-- GNB -->
-	<div id="gnb">
-		
-		<div id="top">
-			<ul>
-				<li class="brand t1"><a href="#" id="topNavi1">JARDIN’s BRAND</a>
-					<ul id="topSubm1">
-						<li><a href="#">클래스</a></li>
-						<li><a href="#">홈스타일 카페모리</a></li>
-						<li><a href="#">드립커피백</a></li>
-						<li><a href="#">카페리얼 커피</a></li>
-						<li><a href="#">오리지널커피백</a></li>
-						<li><a href="#">카페리얼 음료</a></li>
-						<li><a href="#">마일드커피백</a></li>
-						<li><a href="#">워터커피</a></li>
-						<li><a href="#">카페포드</a></li>
-						<li><a href="#">모히또파티</a></li>
-						<li><a href="#">테이크아웃 카페모리</a></li>
-						<li><a href="#">포타제</a></li>
-					</ul>
-				</li>
-				<li class="t2"><a href="#" id="topNavi2">원두</a>
-					<ul id="topSubm2">
-						<li><a href="#">클래스</a></li>
-						<li><a href="#">로스터리샵</a></li>
-						<li><a href="#">커피휘엘</a></li>
-						<li><a href="#">산지별 생두</a></li>
-					</ul>
-				</li>
-				<li class="t1"><a href="#" id="topNavi3">원두커피백</a>
-					<ul id="topSubm3">
-						<li><a href="#">드립커피 로스트</a></li>
-						<li><a href="#">오리지널커피백</a></li>
-						<li><a href="#">마일드커피백</a></li>
-					</ul>
-				</li>
-				<li class="t2"><a href="#" id="topNavi4">인스턴트</a>
-					<ul id="topSubm4">
-						<li><a href="#">까페모리</a></li>
-						<li><a href="#">홈스타일카페모리</a></li>
-						<li><a href="#">포타제</a></li>
-					</ul>
-				</li>
-				<li class="t1"><a href="#" id="topNavi5">음료</a>
-					<ul id="topSubm5">
-						<li><a href="#">까페리얼</a></li>
-						<li><a href="#">워터커피</a></li>
-						<li><a href="#">모히또</a></li>
-					</ul>
-				</li>
-				<li class="t2"><a href="#" id="topNavi6">커피용품</a>
-					<ul id="topSubm6">
-						<li><a href="#">종이컵</a></li>
-						<li><a href="#">커피필터</a></li>
-						<li><a href="#">머신 등</a></li>
-					</ul>
-				</li>
-				<li class="t1"><a href="#" id="topNavi7">선물세트</a></li>
-				<li class="t2"><a href="#" id="topNavi8">대량구매</a></li>
-			</ul>
-		</div>
-
-		<script type="text/javascript">initTopMenu();</script>
-	</div>
-	<!-- //GNB -->
-
 	<!-- container -->
 	<div id="container">
 
@@ -175,18 +107,17 @@
 								<th scope="col">주문상태</th>
 							</thead>
 							<tbody>
-							
-								<c:forEach items="${list}" var="mbdto">
-								<tr>
+							    <c:forEach items="${list}" var="mbdto">
+							      <tr>
 									<td>
 										<p class="day">${mbdto.memberDto.mdate}</p>
-										<p class="orderNum">${mbdto.boardDto.bno}</p>
+										<p class="orderNum">${mbdto.boardDto.bno }</p>
 									</td>
 									<td class="left">
 										${mbdto.boardDto.btitle }
 									</td>
-									<td class="tnone">${mbdto.memberDto.phone }</td>
-									<td class="tnone">${mbdto.boardDto.bhit }</td>
+									<td class="tnone">${mbdto.memberDto.phone } 원</td>
+									<td class="tnone">${mbdto.boardDto.bhit }개</td>
 									<td>
 										<span class="heavygray">배송완료</span>
 										<ul class="state">	
@@ -197,7 +128,29 @@
 										</ul>										
 									</td>
 								</tr>
-								</c:forEach>
+							    </c:forEach>
+							
+							
+								<tr>
+									<td>
+										<p class="day">2012-05-30</p>
+										<p class="orderNum">201205301204-8057</p>
+									</td>
+									<td class="left">
+										쟈뎅 오리지널 콜롬비아 페레이라 원두커피백 15p
+									</td>
+									<td class="tnone">999,999 원</td>
+									<td class="tnone">1000개</td>
+									<td>
+										<span class="heavygray">배송완료</span>
+										<ul class="state">	
+											<li class="r5"><a href="return.html" class="obtnMini iw40">교환</a></li>
+											<li><a href="return.html" class="nbtnMini iw40">반품</a></li>
+											<li><a href="#" class="reviewbtn">리뷰작성</a></li>
+											<li><a href="#" class="decidebtn">구매확정</a></li>
+										</ul>										
+									</td>
+								</tr>
 
 								<tr>
 									<td>
@@ -303,6 +256,8 @@
 						
 						<div class="productList">
 							<ul>
+							    
+							    
 								<!-- Product Yes -->
 								<li>
 									<span class="chk"><input type="checkbox" /></span>
@@ -460,6 +415,5 @@ $(function(){
 		</div>
 	</div>
 	<!-- //container -->
-
 
 <%@ include file="../footer.jsp" %>

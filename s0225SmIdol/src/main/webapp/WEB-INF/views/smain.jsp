@@ -163,7 +163,513 @@
     <div class="title-and-cards">
       <div class="title-bar">Group Name</div>
       <div class="cards">
-      
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />
+          </div>
+          <div class="text-section">
+            <p>Product 01</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/riko.jpg" alt="이미지 2" />
+          </div>
+          <div class="text-section">
+            <p>Product 02</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/rin.jpg" alt="이미지 3" />
+          </div>
+          <div class="text-section">
+            <p>Product 03</p>
+          </div></a>
+        </div>
+        
+        <div class="card"><a href="/sprodview">
+          <div class="image-section">
+            <img src="./images/stelLive/nana.jpg" alt="이미지 4" />
+          </div>
+          <div class="text-section">
+            <p>Product 04</p>
+          </div></a>
+        </div>
+        
+      </div>
+      <a href="sprods"><button class="more-button">see All</button></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="title-and-cards">
+      <div class="title-bar">Group Name</div>
+      <div class="cards">
+
         <div class="card"><a href="/sprodview">
           <div class="image-section">
             <img src="./images/stelLive/masiro.jpg" alt="이미지 1" />

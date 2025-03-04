@@ -1,91 +1,125 @@
 package com.java.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.dto.MemberDto;
 import com.java.service.MemberService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/member")
 public class MemberController {
-
+	
 	@Autowired HttpSession session;
 	@Autowired MemberService memberService;
 	
-	@GetMapping("/step02")//약관동의
-	public String step02() {
-		session.removeAttribute("pwCode");
-		return "/member/step02";
+	// 회원전체 가져오기
+	@CrossOrigin 
+	@ResponseBody // 인증코드 확인
+	@GetMapping("/member/memberList")
+	public List<MemberDto> memberList() {
+		List<MemberDto> list = memberService.memberList();
+		return list;
 	}
 	
-	@GetMapping("/step01")//회원가입
+	// 회원1명 가져오기 , json데이터로 전달을 받으면 @RequestBody 붙여야 함.
+	@CrossOrigin 
+	@ResponseBody // 인증코드 확인
+	@GetMapping("/member/memberView")
+	public MemberDto memberView(String id) {
+		System.out.println("memberView id : "+id);
+		MemberDto memberDto = memberService.memberView(id);
+		return memberDto;
+	}
+	
+	
+	
+	
+	
+	
+	@GetMapping("/member/step01") //회원가입1
 	public String step01() {
-		return "/member/step01";
+		return "member/step01";
+	}
+	@GetMapping("/member/step02") //회원가입2
+	public String step02() {
+		session.removeAttribute("pwCode"); //섹션삭제
+		return "member/step02";
 	}
 	
-	@ResponseBody // 이메일 발송
-	@PostMapping("/sendEmail")
+	@ResponseBody //이메일 발송 - text
+	@PostMapping("/member/sendEmail")
 	public String sendEmail(String email) {
-		System.out.println("sendEmail : " + email);
-//		String pwCode = memberService.sendEmail(email); // email발송 - text
-		String pwCode = memberService.sendEmail2(email); // email발송 - html
-		
+		System.out.println("sendEmail : "+email);
+		String pwCode = memberService.sendEmail(email); //email발송-text
 		return pwCode;
+		
 	}
 	
-	@ResponseBody // 인증코드 확인 발송
-	@PostMapping("/pwCodeCheck")
+	@ResponseBody //이메일 발송2 - html
+	@PostMapping("/member/sendEmail2")
+	public String sendEmail2(String email) {
+		System.out.println("sendEmail2 : "+email);
+		String pwCode = memberService.sendEmail2(email); //email발송-html
+		session.setAttribute("pwCode", pwCode);
+		return pwCode;
+		
+	}
+	
+	@ResponseBody // 인증코드 확인
+	@PostMapping("/member/pwCodeCheck")
 	public String pwCodeCheck(String pwCode) {
-		System.out.println("pwCode : " + pwCode);
-		String pw = (String)session.getAttribute(pwCode);
+		System.out.println("pwCodeCheck pwCode : "+pwCode);
+		String pw = (String)session.getAttribute("pwCode");
 		if(pwCode.equals(pw)) {
 			return "1";
 		}else {
 			return "0";
 		}
+		
 	}
 	
-	@GetMapping("/logout")
+	
+	
+	@GetMapping("/member/logout")
 	public String logout() {
 		session.invalidate();
 		return "redirect:/?loginChk=0";
 	}
 	
-	@GetMapping("/login")
-	public String login() {
-		return "/member/login";
+	@GetMapping("/member/login")
+	public String login(HttpServletResponse response) {
+		//쿠키 생성 - 자바에서 생성
+//		Cookie cookie = new Cookie("cook_id", "aaa");
+//		cookie.setMaxAge(60*60*24); //1일
+//		response.addCookie(cookie); //cookie저장
+		
+		return "member/login";
 	}
 	
-//	@GetMapping("/login")
-//	public String login(HttpServletResponse response) {
-//		//쿠키 생성
-//		Cookie cookie = new Cookie("cookie_id", "aaa");
-//		cookie.setMaxAge(60*60*24); //(s*m*h)
-//		response.addCookie(cookie); // 쿠키 저장
-//		return "/member/login";
-//	}
-	
-	@PostMapping("/login")
+	@PostMapping("/member/login")
 	public String login(MemberDto mdto, Model model) {
-		System.out.println("impl : " + mdto);
+		System.out.println("controller id : "+mdto.getId());
 		MemberDto memberDto = memberService.login(mdto);
-		if(memberDto != null) {
-			session.setAttribute("session_id", memberDto.getId()); //아이디 세션에  저장
+		if(memberDto!=null) {
+			session.setAttribute("session_id", memberDto.getId());
 			return "redirect:/?loginChk=1";
 		}else {
-			model.addAttribute("loginChk", "0");
-			return "/member/login";
+			model.addAttribute("loginChk",0);
+			return "member/login";
 		}
 	}
-	
+
 }

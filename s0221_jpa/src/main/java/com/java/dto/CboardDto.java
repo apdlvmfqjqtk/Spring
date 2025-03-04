@@ -30,22 +30,25 @@ public class CboardDto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) //자동시퀀스
 	private int cno;
 	
+	@Column(nullable = false,length=2000)
+	private String ccontent;
+	
 	@ManyToOne(fetch = FetchType.EAGER) //댓글개수여러개,id1개
 	@JoinColumn(name="id") //Fk키
 	private MemberDto memberDto;
 	//private String id;
+	
 	@Column(nullable = true,length=100)
 	private String cpw;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="bno")
 	private BoardDto boardDto; 
 	//private int bno;
-	@Column(nullable = false,length=2000)
-	private String ccontent;
+	
 	@UpdateTimestamp
 	private Timestamp cdate;
 	
-	@OneToMany(mappedBy = "BoardDto")
-	private List<CboardDto> cboardDto;
+
 	
 }

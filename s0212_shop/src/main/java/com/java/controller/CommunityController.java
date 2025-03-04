@@ -15,26 +15,27 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CommunityController {
+	
 	@GetMapping("/community/comment")
 	public String comment() {
 		return "community/comment";
 	}
 	
-	@ResponseBody
-	@PostMapping("/community/api_cmt")
-	public String api_cmt() throws Exception {
+	@ResponseBody //데이터로 전송 @RestController
+	@PostMapping("/community/api_comment")
+	public String api_comment() throws Exception {
 		//api 호출
-	    String service_key = "Ad916U7ZLEhvt8cnbT9Dpeppz9FigcKbtOSd4T4eC72nw2HBnKacFNjjk6OK9Zpl0TvWe0C8ztwURgVdcQyNXA%3D%3D";
+	    String service_key = "918RE13GA7OY7ZEmUzApgbOeAcQoZ%2FaHsXWcqPAKQ9YNNPj83KOstRMRIUrCFIAcm9qj2R6b7NFZjp%2FYsYzJLg%3D%3D";
 	    String web_url = "https://apis.data.go.kr/1550246/recordImageView/recordImageList";
 	    String page = "1";
 	    
 	    StringBuilder urlBuilder = new StringBuilder(web_url); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "="+service_key); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(page, "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(page, "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("from","UTF-8") + "=" + URLEncoder.encode("1982-01-01", "UTF-8")); /*OS 구분 : IOS (아이폰), AND (안드로이드), WIN (윈도우폰), ETC(기타)*/
         urlBuilder.append("&" + URLEncoder.encode("until","UTF-8") + "=" + URLEncoder.encode("1982-01-01", "UTF-8")); /*서비스명(어플명)*/
-        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*정렬구분 : A=촬영일, B=제목, C=수정일*/
+        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*요청자료형식(XML/JSON)*/
         
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -58,6 +59,12 @@ public class CommunityController {
         return sb.toString();
 	}
 	
+	
+	
+	
+	
+	
+	
 	@GetMapping("/community/epilogue")
 	public String epilogue() {
 		return "community/epilogue";
@@ -73,7 +80,7 @@ public class CommunityController {
 	@PostMapping("/community/api_data")
 	public String api_data() throws Exception {
 		//api 호출
-	    String service_key = "Ad916U7ZLEhvt8cnbT9Dpeppz9FigcKbtOSd4T4eC72nw2HBnKacFNjjk6OK9Zpl0TvWe0C8ztwURgVdcQyNXA%3D%3D";
+	    String service_key = "918RE13GA7OY7ZEmUzApgbOeAcQoZ%2FaHsXWcqPAKQ9YNNPj83KOstRMRIUrCFIAcm9qj2R6b7NFZjp%2FYsYzJLg%3D%3D";
 	    String web_url = "https://apis.data.go.kr/B551011/PhotoGalleryService1/galleryList1";
 	    String page = "1";
 	    

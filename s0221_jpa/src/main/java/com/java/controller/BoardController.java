@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.dto.BoardDto;
+import com.java.dto.CboardDto;
 import com.java.service.BoardService;
 
 @Controller
@@ -24,7 +25,7 @@ public class BoardController {
 	@Autowired BoardService boardService;
 	
 	//pageable page를 자동으로 계산해서 가지고 옴.
-	//page를 파라미터 값으로 받아야 함
+	// page를 파라미터 값으로 받아야 함.
 	@GetMapping("/blist")
 	public String blist( 
 			@PageableDefault(page=0,size=10) //1페이지, 1페이지당 10개
@@ -63,17 +64,28 @@ public class BoardController {
 	@GetMapping("/bview")
 	public String bview(int bno,Model model) {
 		BoardDto boardDto = boardService.findById(bno);
+		System.out.println("clist : "+boardDto.getClist().size());
+		List<CboardDto> clist = boardDto.getClist();
 		model.addAttribute("bdto",boardDto);
+		model.addAttribute("clist",clist);
 		return "bview";
 	}
 	
-	// 1. select * from boarddto where btitle = '답변' 
+	// 1. select * from boarddto where btitle='답변';
 	// 2. select * from boarddto where btitle like '%답변%'
-	@GetMapping("/bsearch") // 제목검색, 내용검색
+	@GetMapping("/bsearch") //제목검색,내용검색
 	public String bsearch(String search,Model model) {
-		List<BoardDto> list = boardService.findByBtitleContaining(search);  // 2번의 형태로 like 검색
+		// 1. List<BoardDto> list = boardService.findByBtitle(search);
+		System.out.println("controller search : "+search);
+		List<BoardDto> list = boardService.findByBtitleContains(search);
+		System.out.println("list : "+list.size());
 		model.addAttribute("list",list);
 		return "blist";
 	}
+	
+	
+	
+	
+	
 
 }

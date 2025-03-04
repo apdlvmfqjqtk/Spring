@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,14 +23,72 @@
 <script type="text/javascript" src="../js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="../js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.anchor.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="../js/html5.js"></script>
 <script type="text/javascript" src="../js/respond.min.js"></script>
 <![endif]-->
+<script type="text/javascript">
+$(document).ready(function() {
+	
+
+
+});
+</script>
 </head>
 <body>
+
+
+
+<!--익스레이어팝업-->
+<div id="ieUser" style="display:none">
+	<div class="iewrap">	
+		<p class="img"><img src="../images/ico/ico_alert.gif" alt="알림" /></p>
+		<p class="txt">IE버전이 낮아 홈페이지 이용에 불편함이 있으므로 <strong>IE9이상이나 다른 브라우저</strong>를 이용해 주세요. </p>
+		<ul>
+			<li><a href="http://windows.microsoft.com/ko-kr/internet-explorer/download-ie" target="_blank"><img src="../images/ico/ico_ie.gif" alt="IE 최신브라우저 다운" ></a></li>
+			<li><a href="https://www.google.com/intl/ko/chrome/browser" target="_blank"><img src="../images/ico/ico_chrome.gif" alt="IE 최신브라우저 다운" ></a></li>
+			<li><a href="http://www.mozilla.org/ko/firefox/new" target="_blank"><img src="../images/ico/ico_mozila.gif" alt="MOZILA 최신브라우저 다운" ></a></li>
+			<li><a href="http://www.apple.com/safari" target="_blank"><img src="../images/ico/ico_safari.gif" alt="SAFARI 최신브라우저 다운" ></a></li>
+			<li><a href="http://www.opera.com/ko/o/ie-simple" target="_blank"><img src="../images/ico/ico_opera.gif" alt="OPERA 최신브라우저 다운" ></a></li>		
+		</ul>
+		<p class="btn" onclick="msiehide();"><img src="../images/ico/ico_close.gif" alt="닫기" /></p>
+	</div>
+</div>
+<!--//익스레이어팝업-->
+<!--IE 6,7,8 사용자에게 브라우저 업데이터 설명 Div 관련 스크립트-->
+ <script type="text/javascript">
+
+     var settimediv = 200000; //지속시간(1000= 1초)
+     var msietimer;
+
+     $(document).ready(function () {
+         msiecheck();
+     });
+
+     var msiecheck = function () {
+         var browser = navigator.userAgent.toLowerCase();
+         if (browser.indexOf('msie 6') != -1 ||
+                browser.indexOf('msie 7') != -1 ||
+				 browser.indexOf('msie 8') != -1) {
+             msieshow();			 
+         }
+         else {
+             msiehide();
+         }
+     }
+
+     var msieshow = function () {
+        $("#ieUser").show();
+        msietimer = setTimeout("msiehide()", settimediv);
+     }
+
+     var msiehide = function () {
+		$("#ieUser").hide();
+        clearTimeout(msietimer);
+     }
+</script>
 
 <div id="allwrap">
 <div id="wrap">
@@ -37,19 +96,19 @@
 	<div id="header">
 		
 		<div id="snbBox">
-			<a href="/"><h1><img src="../images/txt/logo.gif" alt="JARDIN SHOP" /></h1></a>
+			<h1><a href="/"><img src="../images/txt/logo.gif" alt="JARDIN SHOP" /></a></h1>
 			<div id="quickmenu">
 				<div id="mnaviOpen"><img src="../images/btn/btn_mnavi.gif" width="33" height="31" alt="메뉴열기" /></div>
 				<div id="mnaviClose"><img src="../images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
 				<ul>
-					<li><a href="#">EVENT</a></li>
+					<li><a href="/event/event">EVENT</a></li>
 					<li><a href="#">CUSTOMER</a></li>
 					<li><a href="#">COMMUNITY</a></li>
 				</ul>
 			</div>
 			<div id="snb">
 				<ul>
-					<li><a href="/member/login">LOGIN</a></li>
+					<li><a href="#">LOGIN</a></li>
 					<li><a href="#">JOIN</a></li>
 					<li><a href="#">MY PAGE</a></li>
 					<li><a href="#">CART</a></li>
@@ -135,8 +194,8 @@
 
 		<div id="location">
 			<ol>
-				<li><a href="#">HOME</a></li>
-				<li><a href="#">EVENT</a></li>
+				<li><a href="/">HOME</a></li>
+				<li><a href="/event/event">EVENT</a></li>
 				<li class="last">진행중 이벤트</li>
 			</ol>
 		</div>
@@ -155,24 +214,29 @@
 			<!-- contents -->
 			<div id="contents">
 				<div id="mypage">
-					<h2><strong>진행중 이벤트</strong><span>자뎅샵의 특별한 혜택이 가능한 이벤트에 참여해보세요</span></h2>
+					<h2><strong>진행중 이벤트</strong><span>쟈뎅샵의 특별한 혜택이 가득한 이벤트에 참여해 보세요.</span></h2>
 					
 					<div class="viewDivMt">
 						<div class="viewHead">
 							<div class="subject">
 								<ul>
-									<li>${edto.etitle }</li>
+									<li>${edto.etitle}</li>
 								</ul>
 							</div>
 							<div class="day">
-								<p class="txt">이벤트 기간<span><fmt:formatDate value="${edto.stdate}" pattern="yyyy-MM-dd"/> ~ 
-								<fmt:formatDate value="${edto.enddate}" pattern="yyyy-MM-dd"/></span></p>
+								<p class="txt">이벤트 기간
+								<span>
+								<fmt:formatDate value="${edto.stdate}" pattern="yyyy-MM-dd"/>
+								~ 
+								<fmt:formatDate value="${edto.enddate}" pattern="yyyy-MM-dd"/>
+								</span></p>
 							</div>
 						</div>
 
 						<div class="viewContents">
+						    ${edto.econtent}
+						    <br/>
 							<img src="/upload/board/${edto.efile2}" alt="" />
-								<span>사진입니다.</span>
 						</div>
 					</div>
 
@@ -202,39 +266,38 @@
 						</table>
 					</div>
 					<!-- //이전다음글 -->
-					
-<script>
-					  // $(function(){
-						$(document).ready(function(){
-							let chk = 0; //화면창 열림체크
-							let cno;
-							let eno = "${edto.eno}";
-							let id = "${session_id}";
-							let cdate;
-							let ccontent;
-							//댓글 쓰기
+					<script>
+					  $(function(){
+						  let chk = 0; //화면창 열림체크
+						  let cno;
+						  let eno = "${edto.eno}";
+						  let id = "${session_id}";
+						  let cdate;
+						  let ccontent;
+						  
+						  
+						  //댓글쓰기
 						  $(".replyBtn").click(function(){
-							 if($("${session_id}"==""){
-								 alert("로그인을 하셔야 댓글 작성이 가능합니다.");
-								 if(confirm("로그인 페이지로 이동하시겠습니까?")){
-								   location.href="/member/login"
+							 if("${session_id}"==""){
+								 alert("로그인을 하셔야 댓글을 사용할수 있습니다.");
+								 if(confirm("로그인페이지로 이동할까요?")){
+									 location.href="/member/login";
 								 }
-								 
 								 return;
-							 }
-						  $(".replyBtn").click(function(){
+							 } 
+							  
 							 if($(".replyType").val().length<1){
 								 alert("댓글 내용을 입력하셔야 저장이 가능합니다.");
 								 $(".replyType").focus();
 								 return;
 							 }
-							 alert("댓글을 저장합니다.");
-							 console.log("총 개수 : "+(Number($(".allcount").text())+1)+" 개");
-
+							 alert("댓글을 저장합니다."); 
+							 console.log("총 개수 : "+(Number($(".allcount").text())+1));
+							 
 							 let cpw = $(".replynum").val();
 							 let ccontent = $(".replyType").val();
 							 let eno = "${edto.eno}";
-							
+							 
 							 //ajax
 							 $.ajax({
 								url:"/event/cwrite", //링크주소
@@ -245,27 +308,25 @@
 									console.log(data.cno);
 									console.log(data.ccontent);
 									console.log(data.cdate);
-									let cno = data.cno;
-									let ccontent = data.ccontent;
-									let cdate = data.cdate;
-									let id = data.id
 									
 									let hdata = "";
-									//데이터 html 코드 생성
+									//데이터 html코드 생성
 									hdata += '<ul id="'+data.cno+'">';
-									hdata += '<li class="name">'+id+'<span> ['+
+									hdata += '<li class="name">'+data.id+'<span> [ '+
 										moment(data.cdate).format("YYYY-MM-DD HH:mm:ss")
-										+']</span></li>';
-									hdata += '<li class="txt">'+ccontent+'</li>';
+										+' ]</span></li>';
+									hdata += '<li class="txt">'+data.ccontent+'</li>';
 									hdata += '<li class="btn">';
 									hdata += '<a class="rebtn updateBtn">수정</a>&nbsp';
 									hdata += '<a class="rebtn deleteBtn">삭제</a>';
 									hdata += '</li>';
-									hdata += '</ui>';
+									hdata += '</ul>';
 									
 									$(".replyBox").prepend(hdata);
-								  let allcount = Number($(".allcount").text())+1;
-								  $(".allcount").text(allcount);
+									
+									//총개수 1증가
+									let allcount = Number($(".allcount").text())+1;
+									$(".allcount").text(allcount);
 									
 									//입력된 글 삭제
 									$(".replynum").val("");
@@ -275,25 +336,20 @@
 									alert("댓글저장 실패");
 								}
 							 });//ajax
-						  });//ryplybtn //댓글 등록 버튼
+						  });//댓글쓰기-replyBtn
 						  
-						  // 댓글 삭제 - 정적형태: 화면 표시가 되면 추가된 html 소스에는 적용이 안됨
-						  // $(".deleteBtn").click(funtion(){});
+						  //댓글삭제 - 정적형태:화면표시가 되면 추가된 html소스에는 적용이 안됨.
+						  //$(".deleteBtn").click(function(){ });
 						  
-						  //댓글 삭제 - 동적형태: 추가적인 html 소스에도 적용이 가능
-						 		$(document).on('click', '.deleteBtn', function(){
-									if (chk==1){
-										alert('다른 수정화면이 열려있습니다. 완료, 취소를 한 후 수정이 가능합니다.')
-										return;
-									}
-									chk = 1;
-								console.log($(this).closest("ul").attr("id"));
-								let cno = ($(this).closest("ul").attr("id"));
-								if(confirm("삭제하시겠습니까?")){
-									alert(cno + " 번 댓글이 삭제되었습니다.")
-									
-								$.ajax({
-									url:"/event/cdelete", //링크주소
+						  //댓글삭제 - 동적형태:추가적인 html소스에서도 적용이 가능
+						  $(document).on("click",".deleteBtn",function(){
+							  console.log($(this).closest("ul").attr("id"));
+							  let cno = $(this).closest("ul").attr("id");
+							  if(confirm(cno+"번 댓글을 삭제하시겠습니까?")){
+							      alert(cno+"번 게시글이 삭제되었습니다.");
+								  
+							      $.ajax({
+							    	url:"/event/cdelete", //링크주소
 									type:"post",         //타입
 									data:{"cno":cno}, //파라미터
 									dataType:"text", //리턴받을 값의 형태
@@ -302,67 +358,71 @@
 										//삭제
 										$("#"+cno).remove();
 										//총개수 1증가
-									  let allcount = Number($(".allcount").text())+1;
-									  $(".allcount").text(allcount);
-										},
-										error:function(){
-											alert("댓글삭제 실패");
-										}
-							 	});//ajax
-							 }
-							});//도큐먼트 deleteBtn
-							//업데이트 수정
-							$(document).on('click', '.updateBtn', function(){
-								console.log($(this).closest("ul").attr("id"));
-								cno = $(this).closest("ul").attr("id");
-								cdate = $(this).closest("ul").children(".name").children("span").text();
-								ccontent = ($(this).closest("ul").children(".txt").text());
-								
-								console.log(cno);
-								console.log(cdate);
-								console.log(id);
-								console.log(ccontent);
-								alert(cno + " 번 댓글 클릭");
-								
-								let hdata = `
-								<ul>
-									<li class="name">`+id+`<span> `+cdate+` </span></li>
-									<li class="txt"><textarea class="replyType">`+ccontent+`</textarea></li>
-									<li class="btn">
-										<a class="rebtn saveBtn">완료</a>
-										<a class="rebtn cancelBtn">취소</a>
-									</li>
-								</ul>
-								`
-								$("#"+cno).html(hdata);
+										let allcount = Number($(".allcount").text())-1;
+										$(".allcount").text(allcount);
 										
-							});//updateBtn
+									},
+									error:function(){
+										alert("댓글저장 실패");
+									}
+							      });//ajax
+							  }
+						  });//deleteBtn
 						  
-							//수정화면 취소
-							$(document).on("click",".cancelBtn",function(){
-						  	alert(cno+	"번 취소버튼 클릭")
-								console.log(cno);
-								console.log(cdate);
-								console.log(id);
-								
-								let hdata = `
-									<li class="name">`+id+`<span> `+cdate+` </span></li>
-									<li class="txt">`+ ccontent +`</li>
-									<li class="btn">
-										<a class="rebtn updateBtn">수정</a>
-										<a class="rebtn deleteBtn">삭제</a>
-									</li>
-									`;
-									
-									$("#"+cno).html(hdata);
-									chk=0;
-							});//cancelBtn
-							//댓글수정 저장
-					  	$(document).on("click",".saveBtn",function(){
-								alert(cno + "번 댓글수정을 하였습니다..")
-								let ccontent = $(this).closest("ul").children(".txt").children(".replyType").val();
-								
-							$.ajax({
+						  //updateBtn 수정화면
+						  $(document).on("click",".updateBtn",function(){
+							  if (chk==1){
+								  alert("다른 수정화면이 열려 있습니다. 완료,취소를 한후 수정이 가능합니다.");
+								  return;
+							  }
+							  chk=1;
+							  cno = $(this).closest("ul").attr("id");
+							  cdate = $(this).closest("ul").children(".name").children("span").text();
+							  ccontent = $(this).closest("ul").children(".txt").text();
+							  console.log(cno);
+							  console.log(cdate);
+							  console.log(id);
+							  console.log(ccontent);
+							  
+							  alert(cno+"번 하단댓글을 수정합니다.");
+							  
+							  let hdata = `
+								<li class="name">`+id+`<span> `+cdate+`</span></li>
+								<li class="txt"><textarea class="replyType">`+ccontent+`</textarea></li>
+								<li class="btn">
+								  <a class="rebtn saveBtn">완료</a>
+								  <a class="rebtn cancelBtn">취소</a>
+								</li>
+							  `;
+							  $("#"+cno).html(hdata);
+						  });//.updateBtn
+						  
+						  //수정화면 취소
+						  $(document).on("click",".cancelBtn",function(){
+							  alert(cno+"번 취소버튼 클릭")
+							  console.log(id);
+							  console.log(cdate);
+							  console.log(ccontent);
+							  
+							  let hdata = `
+								<li class="name">`+ id +` <span>`+ cdate +`</span></li>
+								<li class="txt">`+ ccontent+`</li>
+								<li class="btn">
+								  <a class="rebtn updateBtn">수정</a>
+								  <a class="rebtn deleteBtn">삭제</a>
+								</li>
+							  `;
+							  $("#"+cno).html(hdata);
+							  chk=0;
+						  });//.cancelBtn
+						  
+						  //댓글수정 저장
+						  $(document).on("click",".saveBtn",function(){
+							  alert(cno+"번 댓글수정을 하였습니다.");
+							  ccontent = $(this).closest("ul").children(".txt").children(".replyType").val();
+							  
+							 //ajax
+							 $.ajax({
 								url:"/event/cupdate", //링크주소
 								type:"post",         //타입
 								data:{"eno":eno,"cno":cno,"ccontent":ccontent}, //파라미터
@@ -371,36 +431,32 @@
 									console.log(data.cno);
 									console.log(data.ccontent);
 									console.log(data.cdate);
-									let cno = data.cno;
-									let ccontent = data.ccontent;
-									let cdate = data.cdate;
-									let id = data.id
 									
 									let hdata = "";
-									//데이터 html 코드 생성
-									hdata += '<ul id="'+data.cno+'">';
-									hdata += '<li class="name">'+id+'<span> ['+
+									//데이터 html코드 생성
+									hdata += '<li class="name">'+data.id+'<span> [ '+
 										moment(data.cdate).format("YYYY-MM-DD HH:mm:ss")
-										+']</span></li>';
+										+' ]</span></li>';
 									hdata += '<li class="txt">'+data.ccontent+'</li>';
 									hdata += '<li class="btn">';
 									hdata += '<a class="rebtn updateBtn">수정</a>&nbsp';
 									hdata += '<a class="rebtn deleteBtn">삭제</a>';
 									hdata += '</li>';
-									hdata += '</ui>';
 									
 									$("#"+cno).html(hdata);
 									
-									//입력된 글 삭제
-									$(".replynum").val("");
-									$(".replyType").val("");
+								},
+								error:function(){
+									alert("댓글저장 실패");
 								}
-							});
-								
-								
-							});//saveBtn
-							
+							 });//ajax
+							 chk=0; 
+						  });//.saveBtn
+						  
+						  
+						  
 					  });//jquery
+					
 					</script>
 
 					<!-- 댓글-->
@@ -417,44 +473,40 @@
 					</div>
 
 					<div class="replyBox">
-					<c:forEach items="${clist}" var="cdto" >
-					<!-- 자기가 쓴 경우 -->
-					<c:if test="${session_id == cdto.id}">
-						<ul id="${cdto.cno}">
-							<li class="name">${cdto.id } <span>[${cdto.cdate}]</span></li>
-							<li class="txt">${cdto.ccontent }</li>
-							<li class="btn">
-								<a class="rebtn updateBtn">수정</a>
-								<a class="rebtn deleteBtn">삭제</a>
-							</li>
-						</ul>
-					</c:if>
-					<!-- 자기가 쓴 게 아닌 경우ㅡ -->
-					<c:if test="${session_id == cdto.id}">
-							<li class="txt">
-								<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
-							</li>
-						</ul>
-					</c:if>
-					</c:forEach>
-						
-						<!--  댓글수정, 비밀댓글 창
+						<c:forEach items="${clist}" var="cdto">
+						<c:if test="${session_id == cdto.id }">
+							<ul id="${cdto.cno}">
+								<li class="name">${cdto.id} <span>[${cdto.cdate }]</span></li>
+								<li class="txt">${cdto.ccontent }</li>
+								<li class="btn">
+									<a class="rebtn updateBtn">수정</a>
+									<a class="rebtn deleteBtn">삭제</a>
+								</li>
+							</ul>
+						</c:if>
+						<c:if test="${session_id != cdto.id }">
 						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt"><textarea class="replyType"></textarea></li>
-							<li class="btn">
-								<a href="#" class="rebtn">완료</a>
-								<a href="#" class="rebtn">취소</a>
+							<li class="name">${cdto.id} <span>[${cdto.cdate }]</span></li>
+							<c:if test="${cdto.cpw != null }">
+							<li class="txt">
+								<a class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
+							</li>
+							</c:if>
+							<c:if test="${cdto.cpw == null }">
+								<li class="txt">${cdto.ccontent }</li>
+							</c:if>
+						</ul>
+						</c:if>
+						</c:forEach>
+
+						<!-- 비밀글 창
+						<ul>
+							<li class="name">${cdto.id} <span>[${cdto.cdate }]</span></li>
+							<li class="txt">
+								<a class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
 							</li>
 						</ul>
 						 -->
-
-						<ul>
-							<li class="name">${cdto.id } <span>[${cdto.cdate}]</span></li>
-							<li class="txt">
-								<a href="password.html" class="passwordBtn"><span class="orange">※ 비밀글입니다.</span></a>
-							</li>
-						</ul>
 					</div>
 					<!-- //댓글 -->
 
@@ -463,7 +515,7 @@
 					<div class="btnArea">
 						<div class="bRight">
 							<ul>
-								<li><a href="#" class="sbtnMini mw">목록</a></li>
+								<li><a href="/event/event" class="sbtnMini mw">목록</a></li>
 							</ul>
 						</div>
 					</div>

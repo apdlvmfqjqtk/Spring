@@ -1,73 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<!-- GNB -->
-	<div id="gnb">
-		
-		<div id="top">
-			<ul>
-				<li class="brand t1"><a href="#" id="topNavi1">JARDIN’s BRAND</a>
-					<ul id="topSubm1">
-						<li><a href="#">클래스</a></li>
-						<li><a href="#">홈스타일 카페모리</a></li>
-						<li><a href="#">드립커피백</a></li>
-						<li><a href="#">카페리얼 커피</a></li>
-						<li><a href="#">오리지널커피백</a></li>
-						<li><a href="#">카페리얼 음료</a></li>
-						<li><a href="#">마일드커피백</a></li>
-						<li><a href="#">워터커피</a></li>
-						<li><a href="#">카페포드</a></li>
-						<li><a href="#">모히또파티</a></li>
-						<li><a href="#">테이크아웃 카페모리</a></li>
-						<li><a href="#">포타제</a></li>
-					</ul>
-				</li>
-				<li class="t2"><a href="#" id="topNavi2">원두</a>
-					<ul id="topSubm2">
-						<li><a href="#">클래스</a></li>
-						<li><a href="#">로스터리샵</a></li>
-						<li><a href="#">커피휘엘</a></li>
-						<li><a href="#">산지별 생두</a></li>
-					</ul>
-				</li>
-				<li class="t1"><a href="#" id="topNavi3">원두커피백</a>
-					<ul id="topSubm3">
-						<li><a href="#">드립커피 로스트</a></li>
-						<li><a href="#">오리지널커피백</a></li>
-						<li><a href="#">마일드커피백</a></li>
-					</ul>
-				</li>
-				<li class="t2"><a href="#" id="topNavi4">인스턴트</a>
-					<ul id="topSubm4">
-						<li><a href="#">까페모리</a></li>
-						<li><a href="#">홈스타일카페모리</a></li>
-						<li><a href="#">포타제</a></li>
-					</ul>
-				</li>
-				<li class="t1"><a href="#" id="topNavi5">음료</a>
-					<ul id="topSubm5">
-						<li><a href="#">까페리얼</a></li>
-						<li><a href="#">워터커피</a></li>
-						<li><a href="#">모히또</a></li>
-					</ul>
-				</li>
-				<li class="t2"><a href="#" id="topNavi6">커피용품</a>
-					<ul id="topSubm6">
-						<li><a href="#">종이컵</a></li>
-						<li><a href="#">커피필터</a></li>
-						<li><a href="#">머신 등</a></li>
-					</ul>
-				</li>
-				<li class="t1"><a href="#" id="topNavi7">선물세트</a></li>
-				<li class="t2"><a href="#" id="topNavi8">대량구매</a></li>
-			</ul>
-		</div>
-
-		<script type="text/javascript">initTopMenu();</script>
-	</div>
-	<!-- //GNB -->
-
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- container -->
 	<div id="container">
 
@@ -91,44 +25,7 @@
 					<li class="last"><a href="#" id="leftNavi6">이메일무단<span>수집거부</span></a></li>
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(1,0);</script>
-			
 			<script>
-			//쿠키 읽어오기
-			$(function(){
-				console.log("쿠키 읽어오기");
-				console.log(document.cookie);
-				//쿠키 배열 생성
-				const cookies = document.cookie.split("; ");
-				for(let cookie of cookies){
-					let [k,v] = cookie.split("=");
-				 	if(k == "cook_id"){
-						console.log(v);
-						$("#id").val(v);
-						$("#id").focus();
-						$("#idsave").attr("checked",true);
-					}
-				}
-			
-			//체크박스 선택 시 쿠키 저장
-					$("#idsave").change(()=> {
-						if($("#idsave").is(":checked")){
-							alert("체크가 되었습니다");
-							let id = $("#id").val();
-							let date = new Date();
-							date.setTime(date.getTime()+(1000*60*60*24)) // 1일
-							//쿠키저장
-							document.cookie = `cook_id=`+id+`; expires=`+date.toUTCString()+`; path=/`;
-						}else{
-							alert("체크가 해제되었습니다.");
-							//쿠키 삭제 - 시간 0으로 세팅, 지난 시간을 입력하면 사라짐	
-							document.cookie = `cook_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC path=/`;
-							$("#id").val("");
-						}
-          });//change
-				});//jquery
-			</script>
-			
-			<!--  <script>
 			  //자바스크립트에서 쿠키저장
 			  $(function(){
 				 //쿠키 읽기
@@ -162,10 +59,11 @@
 					     console.log(document.cookie);
 					 }
 				 });
+				  
+				  
 			  });
-			</script> -->
-			
-			
+			  
+			</script>
 			<!-- contents -->
 			<div id="contents">
 				<div id="member">
@@ -173,15 +71,15 @@
 					<h3>회원 로그인</h3>
 					<div class="informbox">
 						<div class="inform">
+							<form action="/member/login" name="loginFrm" method="post">
 							<ul>
-								<form action="/member/login" name="loginFrm" method="post">
-									<li><input type="text" name="id" id="id" class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
-									<li><input type="password" name="pw" class="passType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
-								</form>
+								<li><input type="text" name="id" id="id" class="loginType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="password" name="pw" class="passType" onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 							</ul>
 
 							<div class="btn"><a class="sbtn">로그인</a></div>
-							<div class="chk"><input type="checkbox" id="idsave"/><label for="idsave">아이디 저장</label></div>							
+							<div class="chk"><input type="checkbox" id="idsave" name="idsave" value="1"/><label for="idsave">아이디 저장</label></div>							
+							</form>
 
 							<div class="point">
 								<p>아이디와 비밀번호를 잊으셨나요?</p>
@@ -216,6 +114,5 @@
 		</div>
 	</div>
 	<!-- //container -->
-
 
 <%@ include file="../footer.jsp" %>

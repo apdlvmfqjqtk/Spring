@@ -20,6 +20,7 @@
 			<li><a href="/sprodview">물건세부</a></li>
 			<li><a href="/sptwind">물건결제</a></li>
 			<li><a href="/sptdone">결제완료</a></li>
+			<li><a href="/test">출력테스트_shopdto</a></li>
 		</ul>
 	</body>
 </html>

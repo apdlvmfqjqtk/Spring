@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- container -->
 	<div id="container">
 
@@ -475,6 +474,4 @@
 		</div>
 	</div>
 	<!-- //container -->
-
-
-<%@ include file="../header.jsp" %>
+<%@ include file="../footer.jsp" %>

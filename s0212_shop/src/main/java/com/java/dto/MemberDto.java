@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class MemberDto {
-	
+
 	private String id;
 	private String pw;
 	private String name;
@@ -20,5 +20,4 @@ public class MemberDto {
 	private String gender;
 	private String hobby;
 	private Timestamp mdate;
-	
 }

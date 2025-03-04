@@ -14,7 +14,7 @@
 		</style>
 	</head>
 	<body>
-	  <h2>게시판리스트</h2>
+	  <h2>게시판뷰페이지</h2>
 	  <table>
 	    <colgroup>
 	      <col width="10%">
@@ -30,17 +30,41 @@
 	      <th>작성일</th>
 	      <th>조회수</th>
 	    </tr>
-	    <c:forEach items="${list}" var="bdto">
 	      <tr>
 	        <td>${bdto.bno }</td>
-	        <td><a href="/bview?bno=${bdto.bno}">${bdto.btitle }</a></td>
+	        <td><a href="/">${bdto.btitle }</a></td>
 	        <td>${bdto.memberDto.id }</td>
 	        <td>${bdto.bdate }</td>
-	        <td>${bdto.bfile }</td>
+	        <td>${bdto.bhit }</td>
+	      </tr>
+	  </table>
+	  <hr>
+	  <table>
+	    <colgroup>
+	      <col width="10%">
+	      <col width="*">
+	      <col width="15%">
+	      <col width="15%">
+	      <col width="10%">
+	    </colgroup>
+	    <tr>
+	      <th>번호</th>
+	      <th>제목</th>
+	      <th>비밀번호</th>
+	      <th>작성자</th>
+	      <th>작성일</th>
+	    </tr>
+	    <c:forEach items="${clist}" var="cdto">
+	      <tr>
+	        <td>${cdto.cno }</td>
+	        <td>${cdto.ccontent }</td>
+	        <td>${cdto.cpw }</td>
+	        <td>${cdto.memberDto.id }</td>
+	        <td>${cdto.cdate }</td>
 	      </tr>
 	    </c:forEach>
-	    
 	  </table>
+	  
 	  
 	   <div><a href="/">메인페이지 이동</a></div>
 	

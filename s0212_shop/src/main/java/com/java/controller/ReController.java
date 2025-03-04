@@ -3,7 +3,7 @@ package com.java.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.java.dto.CboardDto;
@@ -11,45 +11,45 @@ import com.java.service.EventService;
 
 import jakarta.servlet.http.HttpSession;
 
-@Controller
-@RequestMapping("/event")
-@RestController // 데이터만 받는 형태의 컨트롤러
+@RestController
 public class ReController {
 	
+	@Autowired HttpSession session;
 	@Autowired EventService eventService;
-	@Autowired HttpSession session;	
-	//댓글 달기
-	@PostMapping("/cwrite")
+	
+	@PostMapping("/event/cwrite")
 	public CboardDto cwrite(CboardDto cdto) {
-		System.out.println("eno : " +cdto.getEno());
-		System.out.println("cpw : " +cdto.getCpw());
-		System.out.println("ccontent : " +cdto.getCcontent());
-		cdto.setId("session_id"); // => 나중에 session_id로 바꾸면 됨, 바로 밑줄처럼
-//		String id = session.getAttribute("session_id");
-		//댓글저장
+		System.out.println("eno : "+cdto.getEno());
+		System.out.println("cpw : "+cdto.getCpw());
+		System.out.println("ccontent : "+cdto.getCcontent());
+		cdto.setId((String)session.getAttribute("session_id"));
+		//String id = (String) session.getAttribute("session_id");
+		//하단댓글 저장
 		CboardDto cboardDto = eventService.cwrite(cdto);
-		return cboardDto; // 데이터를 전달함, 페이지를 전달하는것이 아님
+		return cboardDto;  //데이터를 전달함, 페이지를 오픈 하는 것이 아님.
 	}
 	
-	@PostMapping("/cupdate")
+	@PostMapping("/event/cupdate")
 	public CboardDto cupdate(CboardDto cdto) {
-		System.out.println("eno : " +cdto.getEno());
-		System.out.println("cno : " +cdto.getCno());
-		System.out.println("ccontent : " +cdto.getCcontent());
-		cdto.setId("aaa"); // => 나중에 session_id로 바꾸면 됨, 바로 밑줄처럼
-//		String id = session.getAttribute("session_id");
-		//댓글저장
+		System.out.println("eno : "+cdto.getEno());
+		System.out.println("cno : "+cdto.getCno());
+		System.out.println("ccontent : "+cdto.getCcontent());
+		cdto.setId("aaa");
+//		//String id = (String) session.getAttribute("session_id");
+//		//하단댓글 저장
 		CboardDto cboardDto = eventService.cupdate(cdto);
-		return cboardDto; // 데이터를 전달함, 페이지를 전달하는것이 아님
+		return cboardDto;  //데이터를 전달함, 페이지를 오픈 하는 것이 아님.
 	}
 	
-	@PostMapping("/cdelete")
+	//댓글삭제
+	@PostMapping("/event/cdelete")
 	public String cdelete(int cno) {
-		
+		System.out.println("cno : "+cno);
 		//하단댓글 삭제
 		eventService.cdelete(cno);
-		return "1"; // 데이터를 전달함, 페이지를 전달하는것이 아님
+		return "1";  //데이터를 전달함, 페이지를 오픈 하는 것이 아님.
 	}
 	
 	
+
 }

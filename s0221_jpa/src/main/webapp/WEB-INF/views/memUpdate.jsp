@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>    
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>회원정보 수정</title>
+		<title>회원정보수정</title>
 	</head>
 	<body>
-	  <h2>회원정보 수정</h2>
+	  <h2>회원정보수정</h2>
 	  <form action="memUpdate" method="post">
 	    <label>아이디</label>
 	    <input type="text" name="id" value="${mdto.id}" readonly><br/>
 	    <label>패스워드</label>
-	    <input type="text" name="pw" value="${mdto.pw}"><br/>
+	    <input type="text" name="pw" value="${mdto.pw }"><br/>
 	    <label>이름</label>
 	    <input type="text" name="name" value="${mdto.name}"><br/>
 	    <label>전화번호</label>
-	    <input type="text" name="phone" value="${mdto.phone}"><br/>
+	    <input type="text" name="phone" value="${mdto.phone }"><br/>
 	    <label>성별</label><br/>
 	    <input type="radio" id="man" name="gender" value="남자" ${ (fn:contains(mdto.gender,'남자'))?'checked':'' }>
 	    <label for="man">남자</label>
@@ -36,7 +36,7 @@
 	    <input type="checkbox" id="book" name="hobby" value="독서" ${ (fn:contains(mdto.hobby,'독서'))?'checked':'' }>
 	    <label for="book">독서</label>
 	    <br/>
-	    <input type="submit" value="정보수정 완료">
+	    <input type="submit" value="회원정보수정">
 	  </form>
 	  
 	  <div><a href="/">메인페이지 이동</a></div>

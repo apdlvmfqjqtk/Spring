@@ -7,10 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class CboardDto {
 
 	private int cno;
@@ -19,6 +19,5 @@ public class CboardDto {
 	private String cpw;
 	private String ccontent;
 	private Timestamp cdate;
-	
 	
 }

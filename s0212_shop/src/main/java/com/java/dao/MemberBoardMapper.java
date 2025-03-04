@@ -10,5 +10,5 @@ import com.java.dto.MemberBoardDto;
 public interface MemberBoardMapper {
 
 	ArrayList<MemberBoardDto> selectAll();
-	
+
 }
