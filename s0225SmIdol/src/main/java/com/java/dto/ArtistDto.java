@@ -1,12 +1,16 @@
 package com.java.dto;
 
+import java.util.List;
+
 import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,5 +30,7 @@ public class ArtistDto {
 	private String artist_group_name;
 	@Column(length = 100)	
 	private String artist_group_image;
-		
+
+//	@OneToMany(mappedBy = "artistDto", fetch = FetchType.EAGER)
+//	private List<ShopDto> shopList;
 }

@@ -37,7 +37,11 @@ public class ShopDto {
 	@Column(length=1000)
 	private String shop_content; 		// 상품설명
 	@Column(length=100)
-	private String shop_image; 			// 상품이미지
+	private String shop_image1; 			// 상품이미지1
+	@Column(length=100)
+	private String shop_image2; 			// 상품이미지2
+	@Column(length=100)
+	private String shop_image3; 			// 상품이미지3
 	@Column(nullable = false, length=10)
 	private int shop_price; 			// 가격
 	@Column(nullable = true, length=10)

@@ -20,4 +20,13 @@ public class ShopServiceImpl implements ShopService {
 		return list;
 	}
 
+	
+	//가수상품전체
+	@Override
+	public List<ShopDto> findByNo(int artist_no) {
+		List<ShopDto> list = shopRepository.findByNo(artist_no);
+		return list;
+	}
+
+
 }

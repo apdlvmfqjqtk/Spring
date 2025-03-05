@@ -20,6 +20,23 @@
       margin: 0 auto;
       padding: 20px;
     }
+    
+    /* 이미지 슬라이더 스타일 */
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
 
     /* 필터 메뉴 스타일 */
     .filters {
@@ -99,6 +116,16 @@
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="slider-container">
+      <img src="/images/stelLive/groupimg04.png" class="slide">
+      <!--
+      <img src="/images/stelLive/groupimg02.png" class="slide">
+      <img src="/images/stelLive/groupimg03.jpg" class="slide">
+      -->
+    </div>
+  </div>
+  
   <div class="container">
     <!-- 필터 메뉴 -->
     <div class="filters">
