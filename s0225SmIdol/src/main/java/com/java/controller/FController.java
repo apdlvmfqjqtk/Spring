@@ -1,6 +1,12 @@
 package com.java.controller;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -34,18 +40,38 @@ public class FController {
 		return "smain";
 	}
 	
+//	@GetMapping("/sprods")
+//	public String sprods() {
+//		return "sprods";
+//	}
+	
 	// 아티스트물건 전체 리스트 호출
 	@GetMapping("/sprods")
 	public String sprods(@RequestParam("artistNo") int artist_no, Model model) {
-		System.out.println("artist_no : " + artist_no);
+		// get받은 artist_no 일치하는 ShopDto 전달
 		List<ShopDto> list = shopService.findByNo(artist_no);
 		model.addAttribute("slist", list);
-		System.out.println("데이터 : " + list);
+		
+		// ShopDto에서 Shop_category만 따로 전달
+		Set<String> categories = list.stream()
+	    .map(ShopDto::getShop_category)
+	    .collect(Collectors.toCollection(LinkedHashSet::new));
+	    model.addAttribute("categories", categories);
+		
+		System.out.println("artist_no : " + artist_no);
+		System.out.println("ShopDto : " + list);
+		System.out.println("category : " + categories);
 		return "sprods";
 	}
 	
 	@GetMapping("/sprodview")
-	public String sprodview() {
+	public String sprodview(@RequestParam("shopNo") int shop_no, Model model) {
+		Optional<ShopDto> slist = shopService.findById(shop_no);
+		System.out.println("상품 하나가져오기 : " + slist);
+		System.out.println("상품 하나가져오기 : " + slist.get());
+		model.addAttribute("prod", slist.get());
+		model.addAttribute("artist", slist.get().getArtistDto());
+		
 		return "sprodview";
 	}
 	

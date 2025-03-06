@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fm"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>KREAM Copy</title>
+  <title>물건 상세 뷰</title>
 	<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />  
   <style>
     /* 기본 초기화 */
@@ -26,7 +28,7 @@
     /* 헤더: 화면 최상단에 고정 (sticky) */
     header {
       width: 100%;
-      background-color: #fff;
+      background-color: #fafaf8;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -94,7 +96,7 @@
     /* 왼쪽 상품 이미지 섹션 */
     .product-images {
       flex: 1;
-      background-color: #fff;
+      background-color: #fafaf8;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -108,6 +110,8 @@
       max-width: 100%;
       height: auto;
       border: 1px solid #eee;
+      background-color: #fafaf8;
+      mix-blend-mode: multiply;
     }
     .thumbnail-list {
       display: flex;
@@ -135,7 +139,7 @@
       gap: 20px;
     }
     .product-header {
-      background-color: #fff;
+      background-color: #fafaf8;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -158,7 +162,7 @@
     }
 
     .product-pricing {
-      background-color: #fff;
+      background-color: #fafaf8;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -197,7 +201,7 @@
     }
     .buy-btn {
       background-color: #eb5757;
-      color: #fff;
+      color: #fafaf8;
     }
     .buy-btn:hover {
       background-color: #cf4545;
@@ -205,14 +209,14 @@
     .sell-btn {
       border: 2px solid #eb5757;
       background-color: ;
-      color: #fff;
+      color: #fafaf8;
       transition: background-color 0.2s ease;
     }
     .sell-btn:hover {
       background-color: #25A767;
     }
     .shipping-info {
-      background-color: #fff;
+      background-color: #fafaf8;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -240,7 +244,7 @@
     /* 상품설명 및 평점 섹션 (하단) */
     .product-description {
       margin-bottom: 40px; /* 위 섹션과 통일감 */
-      background-color: #fff;
+      background-color: #fafaf8;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       padding: 20px;
@@ -274,17 +278,11 @@
       text-align: center;
       margin-bottom: 10px;
     }
-    .rating {
-      font-size: 1.2rem;
-      color: #eb5757;
-      margin-top: 10px;
-      text-align: center;
-    }
 
     /* 상품 상세 정보 섹션 */
     .product-details, .extra-box {
       margin-bottom: 40px;
-      background-color: #fff;
+      background-color: #fafaf8;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       padding: 20px;
@@ -297,6 +295,13 @@
       font-size: 1rem;
       line-height: 1.5;
       color: #555;
+    }
+    
+    a{
+    	text-decoration: none;
+    	text-indent: none;
+    	color: green;
+    	font-size: 14px;
     }
   </style>
 </head>
@@ -342,38 +347,42 @@
     <!-- 오른쪽 상품 정보 섹션 -->
     <div class="product-info">
       <div class="product-header">
-        <div class="brand">Stel x Live</div>
-        <div class="title">상품명이 들어갑니다.</div>
+        <a href="/sprods?artistNo=${artist.artist_no}"><div class="brand">${artist.artist_group_name}</div></a>
+        <div class="title">${prod.shop_title}</div>
         <div class="sub-info">
-          발매가 129,000원<br/>
           출시일 25/02/2020<br/>
-          컬러: Green
+          컬러: Green<br/>
+        	제조국 : 중국
         </div>
       </div>
 
       <div class="product-pricing">
         <div class="price-row">
-          <span class="label">즉시 구매가</span>
-          <span class="price">193,000원</span>
+          <span class="label">일반 구매가</span>
+          <span class="price">
+          	<fm:formatNumber value="${prod.shop_price}" pattern="#,###" /> ₩
+          </span>
         </div>
         <div class="price-row">
-          <span class="label">즉시 판매가</span>
-          <span class="price">188,000원</span>
+          <span class="label">회원 구매가 <a href="/">회원이란?</a></span>
+          <span class="price">
+          	<fm:formatNumber value="${prod.shop_discount_price}" pattern="#,###" /> ₩
+					</span>
         </div>
         <div class="action-buttons">
-          <button class="sell-btn" onclick="location.href= '/spayment' ">관심등록</button>
-          <button class="buy-btn" onclick="location.href= '/spayment' ">구매 193,000원</button>
+          <!-- <button class="sell-btn" onclick="location.href= '/spayment' ">관심등록</button> -->
+          <button class="buy-btn" onclick="location.href= '/spayment' ">구매</button>
         </div>
       </div>
 
       <div class="shipping-info">
         <div class="info-row">
           <span>국내 배송비</span>
-          <span class="value">도서&산간지역 3000원 이외 0원	</span>
+          <span class="value">무료</span>
         </div>
         <div class="info-row">
           <span>해외 배송비</span>
-          <span class="value">Asia 5000원 이외 10000원</span>
+          <span class="value">Asia: 10,000 ₩ &nbsp&nbsp Etc: 30,000 ₩</span>
         </div>
         <div class="info-row">
           <span>멤버쉽 혜택 안내</span>
@@ -397,11 +406,6 @@
         <img src="/images/prodlist.png" alt="Long Product Description" />
       </div>
       <button class="toggle-btn">더보기</button>
-    </div>
-    <div class="rating">
-      <span>평점: </span>
-      <span class="stars">★★★★☆</span>
-      <span>(4.5/5)</span>
     </div>
   </div>
 

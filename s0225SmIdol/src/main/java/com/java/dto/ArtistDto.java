@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @DynamicInsert
 @Builder
@@ -31,6 +32,7 @@ public class ArtistDto {
 	@Column(length = 100)	
 	private String artist_group_image;
 
-//	@OneToMany(mappedBy = "artistDto", fetch = FetchType.EAGER)
-//	private List<ShopDto> shopList;
+	@OneToMany(mappedBy = "artistDto", fetch = FetchType.EAGER)
+	@ToString.Exclude
+	private List<ShopDto> shopList;
 }

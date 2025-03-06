@@ -167,7 +167,7 @@
       <div class="title-bar">${adto.artist_group_name}</div>
       <div class="cards">
         <c:forEach items="${adto.shopList}" begin="0" end="3" step="1" var="sdto">
-        <div class="card"><a href="/sprodview">
+        <div class="card"><a href="/sprodview?shopNo=${sdto.shop_no}">
           <div class="image-section">
             <img src='https://picsum.photos/250/250' alt="test이미지"/>
           </div>
