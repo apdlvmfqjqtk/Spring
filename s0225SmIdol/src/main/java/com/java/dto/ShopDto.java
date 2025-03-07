@@ -49,9 +49,10 @@ public class ShopDto {
 	private int shop_discount_price; 		// 할인율
 	@Column(length=10)
 	private int shop_quantity; 				// 재고수량
+	@Column(length=10)
+	private int shop_buylimit; 				// 재고수량
 	@CreationTimestamp
 	private Timestamp shop_date; 			// 등록일
-	
 	
 	
     @ManyToOne

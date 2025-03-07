@@ -85,6 +85,12 @@ public class FController {
 		return "sptdone";
 	}
 	
+	// 문의사항 페이지
+	@GetMapping("/squestion")
+	public String squestion() {
+		return "squestion";
+	}
+	
 	//test서버 open
 	@CrossOrigin 
 	@GetMapping("/test")
