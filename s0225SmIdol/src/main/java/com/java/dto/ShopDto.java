@@ -35,8 +35,10 @@ public class ShopDto {
 	private String shop_category; 			// 카테고리
 	@Column(nullable = false, length=30)
 	private String shop_title; 				// 상품명
-	@Column(length=1000)
+	@Column(length=100)
 	private String shop_content; 			// 상품설명
+	@Column(length=100)
+	private String shop_spinfo; 			// 상품정보
 	@Column(length=100)
 	private String shop_image1; 			// 상품이미지1
 	@Column(length=100)
@@ -50,7 +52,7 @@ public class ShopDto {
 	@Column(length=10)
 	private int shop_quantity; 				// 재고수량
 	@Column(length=10)
-	private int shop_buylimit; 				// 재고수량
+	private int shop_buylimit; 				// 구매수량
 	@CreationTimestamp
 	private Timestamp shop_date; 			// 등록일
 	

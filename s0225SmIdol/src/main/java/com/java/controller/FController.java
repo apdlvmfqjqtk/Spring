@@ -15,14 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.dto.ArtistDto;
+import com.java.dto.MemberDto2;
 import com.java.dto.ShopDto;
 import com.java.service.ArtistService;
+import com.java.service.MemberService;
 import com.java.service.ShopService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -31,6 +35,7 @@ public class FController {
 	@Autowired HttpSession session;
 	@Autowired ShopService shopService;
 	@Autowired ArtistService artistService;
+	@Autowired MemberService memberService;
 	
 	//메인 화면 호출
 	@GetMapping("/smain")
@@ -75,10 +80,25 @@ public class FController {
 		return "sprodview";
 	}
 	
+	// 배송설정화면
 	@GetMapping("/sptwind")
-	public String sptwind() {
+	public String sptwind(@RequestParam("sprodId") int shop_no,HttpSession session, Model model) {
+		// 선택한 물건 정보를 넘긴다
+		Optional<ShopDto> sprod = shopService.findById(shop_no);
+		System.out.println("상품하나 : " + sprod);
+		model.addAttribute("sprod", sprod);
+		
+		//로그인한 회원 정보를 넘긴다
+		String memberId = (String) session.getAttribute("session_id");
+		Optional<MemberDto2> minfo = memberService.findByMemberId(memberId);
+		System.out.println("로그인고객정보 : " + minfo);
+		model.addAttribute("minfo", minfo);
+		
+		
 		return "sptwind";
 	}
+	
+	
 	
 	@GetMapping("/sptdone")
 	public String sptdone() {
@@ -98,6 +118,34 @@ public class FController {
 		List<ShopDto> list = shopService.findAll();
 		model.addAttribute("list", list);
 		return "test";
+	}
+	
+	
+	// 로그인 페이지
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
+	//로그아웃
+	@GetMapping("/member/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/?loginChk=0";
+	}
+	
+	 // 로그인 버튼클릭
+	@PostMapping("/login")
+	public String login(String id,String pw) {
+		MemberDto2 memberDto2 = memberService.findByMember_idAndMember_pw(id,pw);
+		if(memberDto2 != null) {
+			System.out.println("로그인이 되었습니다.");
+			session.setAttribute("session_id", id);
+			return "redirect:/";
+		}else {
+			System.out.println("로그인이 되지 않았습니다.");
+		}
+		return "redirect:/login?loginChk=0";
 	}
 	
 	

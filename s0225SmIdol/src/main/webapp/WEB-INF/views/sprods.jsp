@@ -163,7 +163,7 @@ a {
 .slider-container {
 	margin-top: 30px;
 	position: relative;
-	width: 100%;
+	width: 1905px;
 	height: 400px;
 	overflow: hidden;
 }
@@ -179,12 +179,12 @@ a {
 
 <body>
 	<!-- 이미지 고유 ID앞 링크 -->
-	<c:set var="baseurl" value="https://drive.google.com/thumbnail?id=" />
+	<c:set var="baseurl" value="https://lh3.googleusercontent.com/d/" />
 	
 	<!-- Banner -->
 	<div class="slider-container">
 		<img class="slide" 
-			src="${baseurl}1cHXZM2lrDn7bwAjqs_zOaawgmIEWUViP"
+			src="${baseurl}1iqnqezaYvtOsfl6ZcOOK3AnZ4B2ZgdiE"
 			alt="shopmainbanner"
 			onerror="this.onerror=null; this.src='https://picsum.photos/1980/400';" />
 	</div>
@@ -209,10 +209,10 @@ a {
 		<!-- 제품 목록 -->
 		<div class="product-list">
 			<c:forEach items="${slist}" var="sdto">
-				<a href="/sprodview?shopNo=${sdto.shop_no}">
 				<div
 					class="product-item ${sdto.shop_quantity == 0 ? 'sold-out-item' : ''}"
 					data-category="${sdto.shop_category}">
+				<a href="/sprodview?shopNo=${sdto.shop_no}">
 					<div class="product-image">
 						<img src="${baseurl}${sdto.shop_image1}" alt="${sdto.shop_title}"
 							onerror="this.onerror=null; this.src='${baseurl}17z6AniRT9Im-Ouxy_7qgqTuJdcR37bhU';" />
@@ -227,8 +227,8 @@ a {
 					<div class="product-price">
 						<fm:formatNumber value="${sdto.shop_price}" pattern="#,###" /> ₩
 					</div>
-				</div>
 				</a>
+				</div>
 			</c:forEach>
 			<c:if test="${empty slist}">
 				<h1>해당 아티스트의 상품이 없습니다.</h1>

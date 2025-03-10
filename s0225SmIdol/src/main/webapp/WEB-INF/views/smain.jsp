@@ -176,6 +176,11 @@ body {
 	display: flex;
 }
 
+.alphabet-buttons button.active {
+  background: #17171B;
+  color: #fff; /* 글자색도 대비되게 변경 */
+}
+
 .modal-content {
 	background: #fff;
 	width: 400px;
@@ -214,10 +219,6 @@ body {
 
 .alphabet-buttons button:hover {
 	background: #f0f0f0;
-}
-
-.alphabet-buttons button:checked {
-	background: #17171B
 }
 
 .artist-list {
@@ -308,6 +309,9 @@ body {
 </head>
 
 <body>
+	<!-- 이미지 고유 ID앞 링크 -->
+	<c:set var="baseurl" value="https://lh3.googleusercontent.com/d/" />
+	
 	<!-- 메인배너 -->
 	<div class="container">
 		<div class="slider-container">
@@ -326,7 +330,7 @@ body {
 	    <c:forEach var="adto" items="${list}">
 	    <a href="/sprods?artistNo=${adto.artist_no}">
 	      <div class="artist-item-circle">
-	        <img src="/images/${adto.artist_group_image}"
+	        <img src="${baseurl}${adto.artist_group_image}"
 	             onerror="this.src='https://picsum.photos/73/73';"
 	             alt="${adto.artist_group_name}" />
 	        <p>${adto.artist_group_name}</p>
@@ -435,6 +439,11 @@ body {
 
     alphaButtons.forEach(btn => {
       btn.addEventListener("click", () => {
+ 	    // 모든 버튼에서 active 클래스 제거
+ 	    alphaButtons.forEach(b => b.classList.remove("active"));
+ 	    // 클릭한 버튼에 active 클래스 추가
+ 	    btn.classList.add("active");
+
         const letter = btn.getAttribute("data-letter");
         artistItems.forEach(item => {
           const name = item.getAttribute("data-name") || "";
