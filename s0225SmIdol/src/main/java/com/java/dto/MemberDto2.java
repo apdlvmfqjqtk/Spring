@@ -51,7 +51,6 @@ public class MemberDto2 {
 	@ColumnDefault("'남자'")
 	private String member_gender;		//성별
 	
-	
 	@Column(nullable = false,length=20)
 	private String member_continent;     // 대륙
 	@Column(nullable = false,length=20)

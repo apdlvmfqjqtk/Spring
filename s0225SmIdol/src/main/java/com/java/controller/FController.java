@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.catalina.manager.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +30,9 @@ import com.java.service.ShopService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class FController {
 
@@ -44,11 +48,6 @@ public class FController {
 		model.addAttribute("list", list);
 		return "smain";
 	}
-	
-//	@GetMapping("/sprods")
-//	public String sprods() {
-//		return "sprods";
-//	}
 	
 	// 아티스트물건 전체 리스트 호출
 	@GetMapping("/sprods")
@@ -90,6 +89,7 @@ public class FController {
 		
 		//로그인한 회원 정보를 넘긴다
 		String memberId = (String) session.getAttribute("session_id");
+		System.out.println("세션아이디 : " + session.getAttribute("session_id"));
 		Optional<MemberDto2> minfo = memberService.findByMemberId(memberId);
 		System.out.println("로그인고객정보 : " + minfo);
 		model.addAttribute("minfo", minfo);
@@ -141,12 +141,14 @@ public class FController {
 		if(memberDto2 != null) {
 			System.out.println("로그인이 되었습니다.");
 			session.setAttribute("session_id", id);
+			System.out.println("세션아이디 : " + session.getAttribute("session_id"));
 			return "redirect:/";
 		}else {
 			System.out.println("로그인이 되지 않았습니다.");
 		}
 		return "redirect:/login?loginChk=0";
 	}
+	
 	
 	
 }

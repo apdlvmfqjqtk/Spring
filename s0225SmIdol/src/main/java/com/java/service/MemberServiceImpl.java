@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Optional<MemberDto2> findByMemberId(String memberId) {
 		Optional<MemberDto2> minfo = memberRepository.findByMemberId(memberId);
-		return Optional.empty();
+		return minfo;
 	}
 
 }
