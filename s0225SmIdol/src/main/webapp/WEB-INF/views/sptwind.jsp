@@ -8,6 +8,7 @@
 <title>Order Page</title>
 <link rel="stylesheet" as="style" crossorigin
 	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 /* 기본 스타일 리셋 */
 * {
@@ -76,7 +77,7 @@ input[type="text"], select, textarea {
 }
 
 /* Add 버튼 등 */
-.box button, #addAddressBtn {
+.box #confirmBtn, #addAddressBtn {
 	padding: 5px 10px;
 	background-color: #444;
 	color: #fff;
@@ -108,7 +109,7 @@ input[type="text"], select, textarea {
 }
 </style>
 
-<c:if test="${empty minfo || minfo == 'Optional.empty'}">
+<c:if test="${empty mdto}">
   <script>
     alert("로그인 하셔야 구매가 가능합니다.");
     location.href = "/login";
@@ -124,7 +125,10 @@ input[type="text"], select, textarea {
 			<!-- Order (Product name) -->
 			<div class="box">
 				<h3>Order (Product name)</h3>
-				<!-- 내용은 굳이 없길래 생략 -->
+				<p>상품번호: ${param.sprodId}</p>
+				<p>주문개수: ${param.quantity}개</p>
+				<p>상품명: ${sdto.shop_title}</p>
+				<p>상품가격 : ${sdto.shop_price}</p>
 			</div>
 
 			<!-- Customer -->
@@ -144,8 +148,7 @@ input[type="text"], select, textarea {
 				<input type="text" id="sample6_detailAddress" placeholder="상세주소">
 				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
 
-				<script
-					src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+				<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 				<script>
           function sample6_execDaumPostcode() {
               new daum.Postcode({
@@ -190,8 +193,8 @@ input[type="text"], select, textarea {
 				<label for="shippingSelect" id="shippingLabel">Shipping
 					Option</label> <select id="shippingSelect">
 					<option value="">-- Select Shipping --</option>
-					<option value="standard">Standard ($20)</option>
-					<option value="express">Express ($30)</option>
+					<option value="20">Standard ($20)</option>
+					<option value="30">Express ($30)</option>
 				</select>
 			</div>
 
@@ -223,18 +226,60 @@ input[type="text"], select, textarea {
 
 		</div>
 
-		<!-- 오른쪽 컬럼 -->
+		<!-- 물건정보 ajax -->
+		<script>
+			function buyBtn() {
+				if(confirm("상품을 구매하시겠습니까?")) {
+					alert("구매하겠습니다.")
+			
+			    var shop_title = "${sdto.shop_title}";
+			    var shop_price = ${sdto.shop_price};
+			    var quantity = ${param.quantity};
+    			// 이후 이 변수들을 자유롭게 사용 가능
+
+			    let pnm = shop_title;
+			    let ppc = shop_price * quantity;
+    
+					let buyDate = {
+						name: pnm,
+						totalPrice: ppc
+					};
+					
+					$.ajax({
+              url: '/pay/orderPay',
+              type: 'POST',
+              data: buyDate,
+              dataType: 'json',
+              success: function(data) {
+            	  alert("성공");
+                  console.log(data);
+                  console.log(data.next_redirect_pc_url);
+            	  location.href = data.next_redirect_pc_url;
+              },
+              error:function(){
+            	  alert("실패");
+              }
+          });
+					
+				} else {
+					alert("결제가 취소되었습니다.")
+				} // if문
+			} // function
+		</script>
+
+		<!-- 오른쪽 정보, 구매버튼 -->
 		<div class="right-col">
 			<div class="box price-info">
 				<p>
 					<strong>Price</strong>
 				</p>
-				<p>Product: $30</p>
-				<p>Shipping: $20</p>
-				<p>total: $50</p>
+				<p>Product: 30</p>
+				<p>개수 ${param.quantity}개</p>
+				<p>Shipping: 20</p>
+				<p>total: ${sdto.shop_price * param.quantity}</p>
 				<p>rewards: $5</p>
 			</div>
-			<button id="confirmBtn" onclick="location.href= '/spaycomp' ">Confirm</button>
+			<div id="confirmBtn" onclick="buyBtn()">Confirm</button>
 		</div>
 	</div>
 

@@ -69,7 +69,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
 		<!-- 1. JSP 템플릿 엔진 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -124,6 +123,10 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.2</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/atg.taglib.json/json-taglib -->
+
+
 
 	</dependencies>
 

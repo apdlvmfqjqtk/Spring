@@ -287,14 +287,16 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 	background-color: #cf4545;
 }
 
-.sell-btn {
-	border: 2px solid #eb5757;
-	background-color:;
+.cart-btn {
+	background-color: green;
 	color: #fafaf8;
 	transition: background-color 0.2s ease;
 }
 
 .sell-btn:hover {
+	background-color: #25A767;
+}
+.cart-btn:hover {
 	background-color: #25A767;
 }
 
@@ -484,6 +486,7 @@ a {
 
 					<div
 						class="action-buttons ${prod.shop_quantity == 0 ? 'sold-out-item' : ''}">
+						<button class="cart-btn">장바구니</button>
 						<button class="buy-btn"
 							onclick="location.href='/sptwind?sprodId=${prod.shop_no}&quantity='+document.getElementById('quantityInput').value"
 							${prod.shop_quantity == 0 ? "disabled" : ""}>
@@ -491,7 +494,7 @@ a {
 					</div>
 
 				</div>
-
+	
 
 				<div class="shipping-info">
 					<div class="info-row">

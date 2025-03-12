@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.java.dto.MemberDto2;
-import com.java.dto.ShopDto;
 import com.java.repository.MemberRepository;
 
 @Service

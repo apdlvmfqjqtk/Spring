@@ -1,7 +1,6 @@
 package com.java.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.java.dto.ArtistDto;
 

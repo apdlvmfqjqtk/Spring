@@ -1,18 +1,15 @@
 package com.java.controller;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import org.apache.catalina.manager.util.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,12 +20,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.dto.ArtistDto;
 import com.java.dto.MemberDto2;
+import com.java.dto.OrderDto;
+import com.java.dto.ReadyResponseDto;
 import com.java.dto.ShopDto;
 import com.java.service.ArtistService;
 import com.java.service.MemberService;
 import com.java.service.ShopService;
 
-import jakarta.servlet.http.HttpServletResponse;
+import com.java.dto.ApproveResponseDto;
+import com.java.service.KakaopayService;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +41,7 @@ public class FController {
 	@Autowired ShopService shopService;
 	@Autowired ArtistService artistService;
 	@Autowired MemberService memberService;
+	@Autowired KakaopayService kakaopayService;
 	
 	//메인 화면 호출
 	@GetMapping("/smain")
@@ -85,18 +87,65 @@ public class FController {
 		// 선택한 물건 정보를 넘긴다
 		Optional<ShopDto> sprod = shopService.findById(shop_no);
 		System.out.println("상품하나 : " + sprod);
-		model.addAttribute("sprod", sprod);
+		model.addAttribute("sdto", sprod.orElse(null));
 		
 		//로그인한 회원 정보를 넘긴다
 		String memberId = (String) session.getAttribute("session_id");
 		System.out.println("세션아이디 : " + session.getAttribute("session_id"));
 		Optional<MemberDto2> minfo = memberService.findByMemberId(memberId);
 		System.out.println("로그인고객정보 : " + minfo);
-		model.addAttribute("minfo", minfo);
-		
-		
+		model.addAttribute("mdto", minfo.orElse(null));
 		return "sptwind";
 	}
+	
+	
+	//카카오페이페이지 결제
+	@ResponseBody
+	@PostMapping("/pay/orderPay")
+	public ReadyResponseDto orderPay(OrderDto odto) {
+		log.info("odto name : "+odto.getName());
+		System.out.println("odto name : "+odto.getName());
+		
+		// 주문번호 생성
+	    String orderNumber = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) 
+	                       + String.format("%010d", new SecureRandom().nextLong() % 10_000_000_000L);
+        // 카카오 결제 준비하기
+        ReadyResponseDto readyResponseDto = kakaopayService.payReady(odto);
+        
+        // 주문번호 설정
+        SessionUtils.addAttribute("orderNumber", orderNumber);
+        
+        
+        // 세션에 결제 고유번호(tid) 저장
+        SessionUtils.addAttribute("tid", readyResponseDto.getTid());
+        log.info("결제 고유번호: " + readyResponseDto.getTid());
+        
+        return readyResponseDto;
+	}
+	
+	@GetMapping("/pay/completed")
+    public String payCompleted(@RequestParam("pg_token") String pgToken) {
+    
+		//섹션에서 tid값을 가져옴.
+        String tid = SessionUtils.getStringAttributeValue("tid");
+        log.info("결제승인 요청을 인증하는 토큰: " + pgToken);
+        log.info("결제 고유번호: " + tid);
+
+        // 카카오 결제 요청하기
+        ApproveResponseDto approveResponseDto = kakaopayService.payApprove(tid, pgToken);
+
+        System.out.println("승인날짜 : "+approveResponseDto.getApproved_at());
+        
+        return "redirect:/sptdone";
+    }
+	
+	//카카오페이성공
+	@GetMapping("/success")
+	public String success() {
+		return "success";
+	}
+	
+	
 	
 	
 	
@@ -148,7 +197,6 @@ public class FController {
 		}
 		return "redirect:/login?loginChk=0";
 	}
-	
 	
 	
 }
