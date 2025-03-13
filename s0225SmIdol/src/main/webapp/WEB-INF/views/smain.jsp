@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fm" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -392,7 +393,8 @@ body {
 									<img src='https://picsum.photos/238/238' alt="test이미지" />
 								</div>
 								<div class="text-section">
-									<p>${sdto.shop_title }</p>
+									<p>${sdto.shop_title}</p>
+									<p><fm:formatNumber value="${sdto.shop_price}" pattern="#,###" /> ₩</p>
 								</div>
 							</a>
 						</div>

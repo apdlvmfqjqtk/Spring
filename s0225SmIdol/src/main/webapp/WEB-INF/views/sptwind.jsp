@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fm" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<title>Order Page</title>
-<link rel="stylesheet" as="style" crossorigin
-	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<title>상품주문</title>
+<link rel="stylesheet" as="style" crossorigin	href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 /* 기본 스타일 리셋 */
 * {
@@ -66,8 +67,8 @@ label {
 	font-weight: bold;
 }
 
-/* input, textarea, select 등 */
-input[type="text"], select, textarea, #rewardInput {
+/* input, select 등 */
+input[type="text"], select, #rewardInput {
 	width: 100%;
 	padding: 5px;
 	margin-bottom: 5px;
@@ -108,9 +109,12 @@ input[type="text"], select, textarea, #rewardInput {
 	border-radius: 5px; /* 둥글둥글하게 */
 }
 
-textarea {
-resize: none;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
+
 </style>
 
 <c:if test="${empty mdto}">
@@ -119,93 +123,71 @@ resize: none;
     location.href = "/login";
   </script>
 </c:if>
+
 </head>
 <body>
 
 	<div class="wrapper">
+	
 		<!-- 왼쪽 컬럼 -->
 		<div class="left-col">
 
-			<!-- Order (Product name) -->
+			<!-- 주문정보 노출 DIV -->
 			<div class="box">
 				<h3>Order (Product name)</h3>
-				<p>상품번호: ${param.sprodId}</p>
-				<p>주문개수: ${param.quantity}개</p>
-				<p>상품명: ${sdto.shop_title}</p>
-				<p>상품가격 : ${sdto.shop_price}</p>
+				<p>상품번호:&nbsp ${param.sprodId}</p>
+				<p>주문개수:&nbsp ${param.quantity}개</p>
+				<p>상품명:&nbsp&nbsp&nbsp&nbsp ${sdto.shop_title}</p>
+				<p>상품가격 : <fm:formatNumber value="${sdto.shop_price * param.quantity}" pattern="#,###" /> ₩</p>
 			</div>
 
-			<!-- Customer -->
+			<!-- 고객정보 노출 DIV -->
 			<div class="box">
-				<h3>Customer</h3>
-				<p>Add user information</p>
-				<button>Add</button>
+				<h3>주문자</h3>
+				<p>${mdto.member_name}</p>
+				<p>${mdto.member_email}</p>
 			</div>
 
-			<!-- Address -->
+			<!-- 주소 입력 DIV -->
 			<div class="box">
 				<h3>주소</h3>
 				<input type="text" id="sample6_postcode" class="addressInput"
 					placeholder="우편번호"> <input type="button" id="addAddressBtn"
-					onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<br> <input type="text" id="sample6_address" placeholder="주소"><br>
-				<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-
-				<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-				<script>
-          function sample6_execDaumPostcode() {
-              new daum.Postcode({
-                  oncomplete: function(data) {
-                      var addr = ''; 
-                      var extraAddr = ''; 
-      
-                      if (data.userSelectedType === 'R') {
-                          addr = data.roadAddress;
-                      } else {
-                          addr = data.jibunAddress;
-                      }
-      
-                      if(data.userSelectedType === 'R'){
-                          if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                              extraAddr += data.bname;
-                          }
-                          if(data.buildingName !== '' && data.apartment === 'Y'){
-                              extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                          }
-                          if(extraAddr !== ''){
-                              extraAddr = ' (' + extraAddr + ')';
-                          }
-                          document.getElementById("sample6_extraAddress").value = extraAddr;
-                      
-                      } else {
-                          document.getElementById("sample6_extraAddress").value = '';
-                      }
-      
-                      document.getElementById('sample6_postcode').value = data.zonecode;
-                      document.getElementById("sample6_address").value = addr;
-                      document.getElementById("sample6_detailAddress").focus();
-                  }
-              }).open();
-          }
-      </script>
+					onclick="FindDaumPostcode()" value="우편번호 찾기"><br>
+				<br> <input type="text" id="src_address" placeholder="주소"><br>
+				<input type="text" id="src_detailAddress" placeholder="상세주소">
+				<input type="text" id="refAddress" placeholder="참고항목">
 			</div>
 
-			<!-- Option (Shipping Option) -->
+			<!-- 배송옵션 DIV -->
 			<div class="box">
-				<h3>배송</h3>
-				<label for="shippingSelect" id="shippingLabel">택배사 선택</label> <select id="shippingSelect">
-					<option value="">-- Select Shipping --</option>
-					<option value="20">Standard ($20)</option>
-					<option value="30">Express ($30)</option>
-				</select>
+			  <h3>배송</h3>
+			  <div id="shippingOptions">
+			    <!-- 한국 내 배송 (50,000원 이상) -->
+			    <div id="shipping-korea-free" style="display:none;">
+			      <p>배송비: <strong>무료</strong></p>
+			      <input type="hidden" id="shippingSelect" value="0">
+			    </div>
+			    
+			    <!-- 한국 내 배송 (50,000원 미만) -->
+			    <div id="shipping-korea-paid" style="display:none;">
+			      <p>배송비: <strong>3,000원</strong> (국내배송)</p>
+			      <input type="hidden" id="shippingSelect" value="3000">
+			    </div>
+			    
+			    <!-- 해외 배송 -->
+			    <div id="shipping-international" style="display:none;">
+			      <p>배송비: <strong>30,000원</strong> (국제배송)</p>
+			      <input type="hidden" id="shippingSelect" value="30000">
+			    </div>
+			  </div>
 			</div>
 
-			<!-- Site Rewards -->
+			<!-- 적립금 사용 DIV -->
 			<div class="box">
 			  <h3>적립금 사용</h3>
 			  <label for="rewardInput" id="rewardLabel">
-			    적용 가능 금액 입력 (최대 ${Math.floor(sdto.shop_price * param.quantity * 0.01)})
+			    적용할 금액 입력 (최대 <fm:formatNumber value="${sdto.shop_price * param.quantity}" pattern="#,###" />₩ 사용가능)
 			  </label>
 			  <p>보유 적립금: ${mdto.member_mileage}</p>
 			  <p id="errorMessage" style="color: red; display: none;">보유 적립금보다 많은 금액은 입력할 수 없습니다.</p>
@@ -215,26 +197,8 @@ resize: none;
 			         max="${Math.floor(sdto.shop_price * param.quantity * 0.01)}"
 			         placeholder="사용할 적립금 입력">
 			</div>
-			
-			<script>
-			  // 보유 적립금, 숫자로 변환
-			  const availableMileage = Number(${mdto.member_mileage});
-			  
-			  const rewardInput = document.getElementById('rewardInput');
-			  const errorMessage = document.getElementById('errorMessage');
-			  
-			  rewardInput.addEventListener('input', function() {
-			    const inputVal = Number(this.value);
-			    if (inputVal > availableMileage) {
-			      errorMessage.style.display = 'block';
-			    } else {
-			      errorMessage.style.display = 'none';
-			    }
-			  });
-			</script>
 
-
-			<!-- Payment method -->
+			<!-- 결제수단 선택 DIV -->
 			<div class="box">
 				<h3>결제수단</h3>
 				<select id="paymentMethod">
@@ -242,71 +206,171 @@ resize: none;
 					<option value="tosspay">토스페이</option>
 				</select>
 			</div>
-
-			<!-- Please Note -->
-			<div class="box">
-				<h3>배송 메시지</h3>
-				<textarea rows="4" placeholder="배송 주의사항을 기입해주세요."></textarea>
-			</div>
-
 		</div>
-
-		<!-- 물건정보 ajax -->
-		<script>
-			function buyBtn() {
-				if(confirm("상품을 구매하시겠습니까?")) {
-					alert("구매하겠습니다.")
-			
-			    var shop_title = "${sdto.shop_title}";
-			    var shop_price = ${sdto.shop_price};
-			    var quantity = ${param.quantity};
-    			// 이후 이 변수들을 자유롭게 사용 가능
-
-			    let pnm = shop_title;
-			    let ppc = shop_price * quantity;
-    
-					let buyDate = {
-						name: pnm,
-						totalPrice: ppc
-					};
-					
-					$.ajax({
-              url: '/pay/orderPay',
-              type: 'POST',
-              data: buyDate,
-              dataType: 'json',
-              success: function(data) {
-            	  alert("성공");
-                  console.log(data);
-                  console.log(data.next_redirect_pc_url);
-            	  location.href = data.next_redirect_pc_url;
-              },
-              error:function(){
-            	  alert("실패");
-              }
-          });
-					
-				} else {
-					alert("결제가 취소되었습니다.")
-				} // if문
-			} // function
-		</script>
+		<!-- 왼쪽섹션 -->
 
 		<!-- 오른쪽 정보, 구매버튼 -->
 		<div class="right-col">
 			<div class="box price-info">
-				<p>
-					<strong>Price</strong>
-				</p>
-				<p>Product: 30</p>
-				<p>개수 ${param.quantity}개</p>
-				<p>Shipping: 20</p>
-				<p>total: ${sdto.shop_price * param.quantity}</p>
-				<p>rewards: $5</p>
+			    <p><strong>가격 정보</strong></p>
+			    <p>상품 가격: <span id="productPrice">${sdto.shop_price * param.quantity} ₩</span></p>
+			    <p>배송비: <span id="shippingFee">0 ₩</span></p>
+			    <p>적립금 사용: <span id="rewardDiscount">0 ₩</span></p>
+			    <hr>
+			    <p><strong>총 결제금액: <span id="totalPrice">${sdto.shop_price * param.quantity} ₩</span></strong></p>
 			</div>
-			<div id="confirmBtn" onclick="buyBtn()">Confirm</button>
+			<div id="confirmBtn" onclick="buyBtn()">구매</button>
 		</div>
 	</div>
+	
+<script>
+$(document).ready(function() {
+    // 가격 및 국가 정보
+    const country = "${mdto.member_country}";
+    const productPrice = ${sdto.shop_price * param.quantity};
+    
+    console.log("국가:", country, "상품가격:", productPrice);
+    
+    // 배송 옵션 표시 (조건에 따라)
+    if (country === "한국") {
+        if (productPrice >= 50000) {
+            // 5만원 이상 무료배송
+            $("#shipping-korea-free").show();
+        } else {
+            // 5만원 미만 3천원
+            $("#shipping-korea-paid").show();
+        }
+    } else {
+        // 한국 외 모든 국가는 3만원
+        $("#shipping-international").show();
+    }
+    
+    // 가격 계산 함수
+    window.updatePrices = function() {
+        const shippingFee = parseInt($("#shippingSelect").val() || 0);
+        const rewardDiscount = parseInt($("#rewardInput").val() || 0);
+        
+        // 총 금액 계산
+        const totalPrice = productPrice + shippingFee - rewardDiscount;
+        
+        // 화면 업데이트
+        $("#productPrice").text(productPrice.toLocaleString() + ' ₩');
+        $("#shippingFee").text(shippingFee.toLocaleString() + ' ₩');
+        $("#rewardDiscount").text('-' + rewardDiscount.toLocaleString() + ' ₩');
+        $("#totalPrice").text(totalPrice.toLocaleString() + ' ₩');
+        
+        // 전역 변수에 저장
+        window.calculatedTotalPrice = totalPrice;
+        window.selectedShippingFee = shippingFee;
+        window.usedReward = rewardDiscount;
+    };
+    
+    // 적립금 입력 처리
+    $("#rewardInput").on('input', function() {
+        const inputVal = Number($(this).val());
+        const availableMileage = Number(${mdto.member_mileage});
+        const maxUsableMileage = Math.min(
+            availableMileage, 
+            Math.floor(productPrice * 0.01)
+        );
+        
+        // 입력값 검증
+        if (inputVal > availableMileage) {
+            $("#errorMessage").text("보유 적립금보다 많은 금액은 입력할 수 없습니다.");
+            $("#errorMessage").show();
+            $(this).val(availableMileage);
+        } else if (inputVal > maxUsableMileage) {
+            $("#errorMessage").text("주문 금액의 최대 1%까지만 사용할 수 있습니다.");
+            $("#errorMessage").show();
+            $(this).val(maxUsableMileage);
+        } else {
+            $("#errorMessage").hide();
+        }
+        
+        // 가격 갱신
+        window.updatePrices();
+    });
+    
+    // 초기 가격 계산
+    window.updatePrices();
+});
 
+// 우편번호 검색 함수
+function FindDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            var addr = ''; 
+            var extraAddr = ''; 
+
+            if (data.userSelectedType === 'R') {
+                addr = data.roadAddress;
+            } else {
+                addr = data.jibunAddress;
+            }
+
+            if(data.userSelectedType === 'R'){
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                document.getElementById("refAddress").value = extraAddr;
+            
+            } else {
+                document.getElementById("refAddress").value = '';
+            }
+
+            document.getElementById('sample6_postcode').value = data.zonecode;
+            document.getElementById("src_address").value = addr;
+            document.getElementById("src_detailAddress").focus();
+        }
+    }).open();
+}
+
+// 구매 버튼 클릭
+function buyBtn() {
+    if(confirm("상품을 구매하시겠습니까?")) {
+        // 주소 입력 여부 확인
+        if(!$("#src_address").val() || !$("#sample6_postcode").val() || !$("#src_detailAddress").val()) {
+            alert("배송지 주소를 입력해주세요.");
+            return;
+        }
+        
+        // 결제 데이터 준비
+        let buyDate = {
+            name: "${sdto.shop_title}",
+            totalPrice: window.calculatedTotalPrice || ${sdto.shop_price * param.quantity},
+            quantity: ${param.quantity},
+            shippingFee: window.selectedShippingFee || 0,
+            usedReward: window.usedReward || 0,
+            address: $("#src_address").val() + " " + $("#src_detailAddress").val(),
+            zipCode: $("#sample6_postcode").val(),
+            paymentMethod: $("#paymentMethod").val()
+        };
+        
+        // AJAX로 결제 API 호출
+        $.ajax({
+            url: '/pay/orderPay',
+            type: 'POST',
+            data: buyDate,
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                location.href = data.next_redirect_pc_url;
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert("결제 요청 중 오류가 발생했습니다: " + error);
+            }
+        });
+    } else {
+        alert("결제가 취소되었습니다.");
+    }
+};
+</script>
 </body>
 </html>
