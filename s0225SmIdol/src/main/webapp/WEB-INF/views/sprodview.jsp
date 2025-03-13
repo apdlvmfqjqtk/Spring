@@ -483,12 +483,23 @@ a {
 						</div>
 					</div>
 
+					<script>
+					function buyBtn() {
+							if(${prod.shop_quantity} - document.getElementById('quantityInput').value < 0) {
+								alert("상품이" + ${prod.shop_quantity} + "개 남았습니다. 다시 주문해주세요")
+							}else {
+						  	location.href = "/sptwind?sprodId=" + ${prod.shop_no} + "&quantity=" + document.getElementById('quantityInput').value;
+							}
+						}
 
+						 
+					</script>
+					
 					<div
 						class="action-buttons ${prod.shop_quantity == 0 ? 'sold-out-item' : ''}">
 						<button class="cart-btn">장바구니</button>
 						<button class="buy-btn"
-							onclick="location.href='/sptwind?sprodId=${prod.shop_no}&quantity='+document.getElementById('quantityInput').value"
+							onclick=buyBtn()
 							${prod.shop_quantity == 0 ? "disabled" : ""}>
 							${prod.shop_quantity == 0 ? "품절" : "구매"}</button>
 					</div>

@@ -67,7 +67,7 @@ label {
 }
 
 /* input, textarea, select 등 */
-input[type="text"], select, textarea {
+input[type="text"], select, textarea, #rewardInput {
 	width: 100%;
 	padding: 5px;
 	margin-bottom: 5px;
@@ -106,6 +106,10 @@ input[type="text"], select, textarea {
 	font-size: 1rem;
 	cursor: pointer;
 	border-radius: 5px; /* 둥글둥글하게 */
+}
+
+textarea {
+resize: none;
 }
 </style>
 
@@ -189,9 +193,8 @@ input[type="text"], select, textarea {
 
 			<!-- Option (Shipping Option) -->
 			<div class="box">
-				<h3>Option</h3>
-				<label for="shippingSelect" id="shippingLabel">Shipping
-					Option</label> <select id="shippingSelect">
+				<h3>배송</h3>
+				<label for="shippingSelect" id="shippingLabel">택배사 선택</label> <select id="shippingSelect">
 					<option value="">-- Select Shipping --</option>
 					<option value="20">Standard ($20)</option>
 					<option value="30">Express ($30)</option>
@@ -200,28 +203,50 @@ input[type="text"], select, textarea {
 
 			<!-- Site Rewards -->
 			<div class="box">
-				<h3>Site rewards</h3>
-				<label for="rewardSelect" id="rewardLabel">Choose Reward</label> <select
-					id="rewardSelect">
-					<option value="">-- Select Reward --</option>
-					<option value="5">$5</option>
-					<option value="10">$10</option>
-				</select>
+			  <h3>적립금 사용</h3>
+			  <label for="rewardInput" id="rewardLabel">
+			    적용 가능 금액 입력 (최대 ${Math.floor(sdto.shop_price * param.quantity * 0.01)})
+			  </label>
+			  <p>보유 적립금: ${mdto.member_mileage}</p>
+			  <p id="errorMessage" style="color: red; display: none;">보유 적립금보다 많은 금액은 입력할 수 없습니다.</p>
+			  <input type="number"
+			         id="rewardInput"
+			         min="0"
+			         max="${Math.floor(sdto.shop_price * param.quantity * 0.01)}"
+			         placeholder="사용할 적립금 입력">
 			</div>
+			
+			<script>
+			  // 보유 적립금, 숫자로 변환
+			  const availableMileage = Number(${mdto.member_mileage});
+			  
+			  const rewardInput = document.getElementById('rewardInput');
+			  const errorMessage = document.getElementById('errorMessage');
+			  
+			  rewardInput.addEventListener('input', function() {
+			    const inputVal = Number(this.value);
+			    if (inputVal > availableMileage) {
+			      errorMessage.style.display = 'block';
+			    } else {
+			      errorMessage.style.display = 'none';
+			    }
+			  });
+			</script>
+
 
 			<!-- Payment method -->
 			<div class="box">
-				<h3>Payment method</h3>
+				<h3>결제수단</h3>
 				<select id="paymentMethod">
-					<option value="credit">credit card</option>
-					<option value="bitcoin">BITCOIN</option>
+					<option value="kakaopay">카카오페이</option>
+					<option value="tosspay">토스페이</option>
 				</select>
 			</div>
 
 			<!-- Please Note -->
 			<div class="box">
-				<h3>Please Note</h3>
-				<textarea rows="4" placeholder="Any additional note"></textarea>
+				<h3>배송 메시지</h3>
+				<textarea rows="4" placeholder="배송 주의사항을 기입해주세요."></textarea>
 			</div>
 
 		</div>

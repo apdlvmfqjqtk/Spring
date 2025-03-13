@@ -25,45 +25,7 @@
 					<li class="last"><a href="#" id="leftNavi6">이메일무단<span>수집거부</span></a></li>
 				</ul>			
 			</div><script type="text/javascript">initSubmenu(1,0);</script>
-			<script>
-			  //자바스크립트에서 쿠키저장
-			  $(function(){
-				 //쿠키 읽기
-				 console.log("전체 쿠키 읽어오기 ")
-				 console.log(document.cookie);
-				 // 쿠키배열생성
-				 const cookies = document.cookie.split("; ");
-				 for(let cookie of cookies){
-					 let [k,v] = cookie.split("=");
-					 if(k == "cook_id"){
-						 console.log(v);
-						 $("#id").val(v);
-						 $("#id").focus();
-						 $("#idsave").attr("checked",true);
-					 }
-				 } 
-				  
-				 //체크박스 체크시 쿠키 저장 
-				 $("#idsave").change(()=>{
-					 if($("#idsave").is(":checked")){
-					     let id = $("#id").val();
-					     let date = new Date();
-					     date.setTime(date.getTime()+(1000*60*60*24)); //1일
-					     //쿠키저장
-					     document.cookie = `cook_id=`+id+`; expires=`+date.toUTCString()+`; path=/`;
-					     console.log(document.cookie);
-					 }else{
-						 //쿠키삭제 - 시간 0으로 세팅, 지난시간을 입력하면 사라짐.
-						 document.cookie = `cook_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
-						 $("#id").val("");
-					     console.log(document.cookie);
-					 }
-				 });
-				  
-				  
-			  });
-			  
-			</script>
+
 			<!-- contents -->
 			<div id="contents">
 				<div id="member">
@@ -122,4 +84,7 @@
 	</div>
 	<!-- //container -->
 
-<%@ include file="./footer.jsp" %>
+</div>
+</div>
+</body>
+</html>
